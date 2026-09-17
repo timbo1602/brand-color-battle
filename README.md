@@ -46,7 +46,7 @@ Ohne Supabase-Konfiguration arbeitet die Bestenliste weiterhin vollständig loka
 ## Supabase aktivieren
 
 1. Ein Supabase-Projekt anlegen und `supabase-schema.sql` vollständig im SQL Editor ausführen.
-2. In `js/config.js` die Project URL als `SUPABASE_URL` und den öffentlichen Anon-Key als `SUPABASE_ANON_KEY` eintragen.
+2. In `js/config.js` die Project URL als `SUPABASE_URL` und den öffentlichen Publishable Key als `SUPABASE_PUBLISHABLE_KEY` eintragen. Der alte `SUPABASE_ANON_KEY` wird aus Kompatibilitätsgründen ebenfalls erkannt.
 3. Die Änderung auf `main` pushen; GitHub Pages veröffentlicht sie automatisch.
 
-Der Anon-Key ist für die Verwendung im Browser vorgesehen und wird durch Row Level Security eingeschränkt. Niemals einen `service_role`-Schlüssel im Frontend verwenden. Anonyme Besucher dürfen ausschließlich die Bestenliste lesen und gültige Ergebnisse eintragen; Updates und Deletes bleiben gesperrt.
+Der Publishable Key ist für die Verwendung im Browser vorgesehen und wird durch Row Level Security eingeschränkt. Niemals einen Secret- oder `service_role`-Schlüssel im Frontend verwenden. Anonyme Besucher dürfen ausschließlich die Bestenliste lesen und gültige Ergebnisse eintragen; Updates und Deletes bleiben gesperrt.

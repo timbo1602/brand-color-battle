@@ -3,8 +3,8 @@
 
   const settings = window.BRAND_COLOR_BATTLE_SUPABASE || {};
   const supabaseUrl = String(settings.SUPABASE_URL || "").replace(/\/+$/, "");
-  const anonKey = String(settings.SUPABASE_ANON_KEY || "").trim();
-  const enabled = /^https:\/\//i.test(supabaseUrl) && anonKey.length > 20;
+  const publishableKey = String(settings.SUPABASE_PUBLISHABLE_KEY || settings.SUPABASE_ANON_KEY || "").trim();
+  const enabled = /^https:\/\//i.test(supabaseUrl) && publishableKey.length > 20;
   const leaderboardKey = "brand-color-battle-leaderboard-v1";
   const pendingKey = "brand-color-battle-pending-scores-v1";
   const refreshInterval = 30_000;
@@ -166,8 +166,7 @@
         ...options,
         signal: controller.signal,
         headers: {
-          apikey: anonKey,
-          Authorization: `Bearer ${anonKey}`,
+          apikey: publishableKey,
           ...(options.headers || {})
         }
       });
