@@ -1,0 +1,2 @@
+# Eine spätere lokale Supabase-Konfiguration darf keine echten Werte versehentlich committen.
+js/config.js

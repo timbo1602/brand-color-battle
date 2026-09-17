@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090b12" />
+    <meta
+      name="description"
+      content="Brand Color Battle – das interaktive Farbenquiz für die Berufsmesse Mediengestaltung Digital und Print."
+    />
+    <title>Brand Color Battle</title>
+    <link rel="preload" as="image" href="./assets/congratulations-chameleon.webp" type="image/webp" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b12'/%3E%3Ccircle cx='23' cy='25' r='13' fill='%2300d9ff'/%3E%3Ccircle cx='41' cy='25' r='13' fill='%23ff2e9a' fill-opacity='.85'/%3E%3Ccircle cx='32' cy='41' r='13' fill='%23ffe14f' fill-opacity='.85'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/questions.js" defer></script>
+    <script src="./js/app.js" defer></script>
+  </head>
+  <body>
+    <div class="color-rail" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="app-shell">
+      <header class="app-header">
+        <button class="brand-button" id="home-button" type="button" aria-label="Zur Startseite">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>BRAND COLOR <b>BATTLE</b></span>
+        </button>
+
+        <div class="header-status" id="header-status" hidden>
+          <span id="header-question">01 / 12</span>
+          <strong id="header-score">0 P</strong>
+        </div>
+
+        <div class="header-actions">
+          <button class="icon-button" id="sound-button" type="button" aria-label="Ton ausschalten" title="Ton an/aus">
+            <span id="sound-icon" aria-hidden="true">♪</span>
+          </button>
+          <button class="icon-button" id="fullscreen-button" type="button" aria-label="Vollbild öffnen" title="Vollbild">
+            <span aria-hidden="true">⛶</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="game-stage" id="game-stage">
+        <section class="screen start-screen is-active" id="start-screen" aria-labelledby="start-title">
+          <div class="start-layout">
+            <div class="start-copy">
+              <p class="eyebrow">Das Farbquiz für Markenkenner</p>
+              <h1 id="start-title">Wie gut ist dein <span>Farbgedächtnis?</span></h1>
+              <p class="intro">
+                Zwölf Aufgaben. Vier Runden. Farben erkennen, Marken zuordnen und im Color Lab selbst mischen.
+              </p>
+
+              <form class="start-form" id="start-form">
+                <label for="nickname">Dein Name im Ranking</label>
+                <div class="input-row">
+                  <input
+                    id="nickname"
+                    name="nickname"
+                    type="text"
+                    maxlength="18"
+                    autocomplete="off"
+                    placeholder="Spitzname"
+                    aria-describedby="nickname-note"
+                  />
+                  <button class="primary-button" type="submit">
+                    Battle starten <span aria-hidden="true">→</span>
+                  </button>
+                </div>
+                <p class="field-note" id="nickname-note">Keine Anmeldung. Dein Ergebnis bleibt nur auf diesem PC.</p>
+              </form>
+
+              <div class="start-actions">
+                <button class="text-button" id="open-leaderboard" type="button">Bestenliste ansehen</button>
+                <span id="local-best">Noch kein Highscore</span>
+              </div>
+            </div>
+
+            <aside class="game-card" aria-label="Spielübersicht">
+              <div class="game-card-top">
+                <span>QUIZ FORMAT</span>
+                <strong>4 × 3</strong>
+              </div>
+              <ol class="round-list">
+                <li><span>01</span><div><strong>Farbgedächtnis</strong><small>Markenfarben erkennen</small></div></li>
+                <li><span>02</span><div><strong>Brand Match</strong><small>Paletten zuordnen</small></div></li>
+                <li><span>03</span><div><strong>Color Lab</strong><small>Farben selbst mischen</small></div></li>
+                <li><span>04</span><div><strong>Design Check</strong><small>Wissen anwenden</small></div></li>
+              </ol>
+              <div class="difficulty-key" aria-label="Schwierigkeitsstufen">
+                <span><i class="dot easy"></i>Leicht</span>
+                <span><i class="dot medium"></i>Mittel</span>
+                <span><i class="dot hard"></i>Schwer</span>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="screen round-screen" id="round-screen" aria-labelledby="round-title">
+          <div class="round-number" id="round-number">01</div>
+          <p class="eyebrow" id="round-label">Runde 1 von 4</p>
+          <h2 id="round-title">Farbgedächtnis</h2>
+          <p id="round-description">Erkennst du Marken allein an ihrem Farbton?</p>
+          <div class="round-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <button class="primary-button" id="round-start-button" type="button">
+            Runde starten <span aria-hidden="true">→</span>
+          </button>
+        </section>
+
+        <section class="screen quiz-screen" id="quiz-screen" aria-labelledby="question-title">
+          <div class="quiz-topline">
+            <div>
+              <span class="round-tag" id="quiz-round">Runde 1 · Farbgedächtnis</span>
+              <span class="difficulty-badge easy" id="difficulty-badge">Leicht</span>
+            </div>
+            <span class="question-points" id="question-points">+50 P</span>
+          </div>
+
+          <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
+
+          <div class="question-copy">
+            <p class="question-kicker" id="question-kicker">Markenfarbe erkennen</p>
+            <h2 id="question-title">Welche Farbe gehört zu YouTube?</h2>
+            <p id="question-instruction">Wähle die richtige Farbe aus.</p>
+          </div>
+
+          <div class="answer-area" id="answer-area"></div>
+
+          <div class="quiz-actions" id="quiz-actions">
+            <button class="primary-button" id="submit-answer" type="button" disabled>
+              Antwort prüfen
+            </button>
+          </div>
+
+          <div class="feedback-card" id="feedback-card" aria-live="polite" hidden>
+            <div class="feedback-icon" id="feedback-icon" aria-hidden="true">✓</div>
+            <div class="feedback-copy">
+              <div class="feedback-heading">
+                <strong id="feedback-title">Richtig!</strong>
+                <span id="feedback-points">+50 Punkte</span>
+              </div>
+              <p id="feedback-text"></p>
+              <div id="feedback-comparison"></div>
+            </div>
+            <button class="primary-button compact" id="next-question" type="button">
+              Weiter <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="screen result-screen" id="result-screen" aria-labelledby="result-title">
+          <div class="result-grid">
+            <div class="result-main">
+              <p class="eyebrow">Battle beendet</p>
+              <h2 id="result-title">Starkes Farbgefühl!</h2>
+              <div class="score-lockup">
+                <strong id="final-score">0</strong>
+                <span>von <b id="max-score">1.200</b> Punkten</span>
+              </div>
+              <div class="rank-badge" id="rank-badge">COLOR ROOKIE</div>
+              <p class="result-message" id="result-message"></p>
+
+              <div class="result-actions">
+                <button class="primary-button" id="restart-button" type="button">Noch einmal spielen</button>
+                <button class="secondary-button" id="result-home-button" type="button">Zur Startseite</button>
+              </div>
+            </div>
+
+            <div class="result-details">
+              <figure class="victory-meme">
+                <img
+                  src="./assets/congratulations-chameleon.webp"
+                  alt="Jubelndes, buntes Chamäleon mit Farbfächer und Konfetti"
+                  width="1200"
+                  height="800"
+                />
+                <figcaption>
+                  <span>CONGRATULATIONS!</span>
+                  <strong>Du hast das Farbchaos überlebt.</strong>
+                </figcaption>
+              </figure>
+
+              <section class="panel">
+                <div class="panel-heading"><h3>Deine Runden</h3><span id="result-name"></span></div>
+                <div class="breakdown-list" id="breakdown-list"></div>
+              </section>
+
+              <section class="panel">
+                <div class="panel-heading"><h3>Top 5 auf diesem PC</h3><span>LOCAL</span></div>
+                <ol class="leaderboard-list compact-list" id="result-leaderboard"></ol>
+              </section>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <span>Mediengestaltung Digital &amp; Print</span>
+        <span>Marken und Farben gehören ihren jeweiligen Inhabern · Schulisches Quiz</span>
+      </footer>
+    </div>
+
+    <dialog class="leaderboard-dialog" id="leaderboard-dialog">
+      <div class="dialog-head">
+        <div><span class="eyebrow">Dieser PC</span><h2>Bestenliste</h2></div>
+        <button class="icon-button" id="close-leaderboard" type="button" aria-label="Bestenliste schließen">×</button>
+      </div>
+      <ol class="leaderboard-list" id="leaderboard-list"></ol>
+      <div class="dialog-actions">
+        <button class="text-button danger" id="clear-leaderboard" type="button">Bestenliste löschen</button>
+        <button class="secondary-button" id="close-leaderboard-bottom" type="button">Schließen</button>
+      </div>
+    </dialog>
+
+    <div class="sr-only" id="live-region" aria-live="polite"></div>
+  </body>
+</html>
