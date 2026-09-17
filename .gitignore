@@ -1,2 +1,2 @@
-# Eine spätere lokale Supabase-Konfiguration darf keine echten Werte versehentlich committen.
-js/config.js
+# Lokale Varianten können für Tests genutzt werden, werden aber nicht veröffentlicht.
+js/config.local.js

@@ -15,8 +15,10 @@ Die Web-App besteht ausschließlich aus HTML, CSS und JavaScript. Sie benötigt 
 │   └── style.css
 ├── js/
 │   ├── app.js
+│   ├── config.js
 │   ├── config.example.js
-│   └── questions.js
+│   ├── questions.js
+│   └── supabase.js
 ├── assets/
 │   └── congratulations-chameleon.webp
 ├── .github/workflows/
@@ -37,6 +39,14 @@ Falls Pages für das Repository noch nicht aktiviert ist, unter **Repository →
 
 ## Bestenliste
 
-Die App speichert die zehn besten Ergebnisse in `localStorage`. Dadurch bleibt die Bestenliste im verwendeten Browser auf dem jeweiligen PC erhalten. Sie wird nicht zwischen Geräten synchronisiert und kann beim Löschen der Browserdaten verloren gehen. Eine beschädigte oder nicht verfügbare lokale Speicherung blockiert das Quiz nicht.
+Die App unterstützt eine gemeinsame Supabase-Bestenliste für alle Messe-PCs. Ergebnisse werden zusätzlich lokal gespeichert. Bei fehlender Internetverbindung zeigt die App die lokale Liste, merkt neue Ergebnisse vor und überträgt sie automatisch, sobald Supabase wieder erreichbar ist. Eine eindeutige `submission_id` verhindert doppelte Einträge bei Wiederholungsversuchen. Fehler im Backend blockieren das Quiz nicht.
 
-Als nächste Erweiterung ist eine gemeinsame Supabase-Bestenliste für alle Messe-PCs vorgesehen. `supabase-schema.sql` enthält dafür einen vorbereiteten Tabellen- und RLS-Entwurf. In `js/config.example.js` sind die später benötigten öffentlichen Konfigurationswerte dokumentiert. Für die Anbindung werden `SUPABASE_URL` und `SUPABASE_ANON_KEY` benötigt; ein `service_role`-Schlüssel darf niemals im Frontend verwendet werden.
+Ohne Supabase-Konfiguration arbeitet die Bestenliste weiterhin vollständig lokal über `localStorage`.
+
+## Supabase aktivieren
+
+1. Ein Supabase-Projekt anlegen und `supabase-schema.sql` vollständig im SQL Editor ausführen.
+2. In `js/config.js` die Project URL als `SUPABASE_URL` und den öffentlichen Anon-Key als `SUPABASE_ANON_KEY` eintragen.
+3. Die Änderung auf `main` pushen; GitHub Pages veröffentlicht sie automatisch.
+
+Der Anon-Key ist für die Verwendung im Browser vorgesehen und wird durch Row Level Security eingeschränkt. Niemals einen `service_role`-Schlüssel im Frontend verwenden. Anonyme Besucher dürfen ausschließlich die Bestenliste lesen und gültige Ergebnisse eintragen; Updates und Deletes bleiben gesperrt.

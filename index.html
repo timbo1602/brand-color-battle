@@ -16,7 +16,9 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b12'/%3E%3Ccircle cx='23' cy='25' r='13' fill='%2300d9ff'/%3E%3Ccircle cx='41' cy='25' r='13' fill='%23ff2e9a' fill-opacity='.85'/%3E%3Ccircle cx='32' cy='41' r='13' fill='%23ffe14f' fill-opacity='.85'/%3E%3C/svg%3E"
     />
     <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/config.js" defer></script>
     <script src="./js/questions.js" defer></script>
+    <script src="./js/supabase.js" defer></script>
     <script src="./js/app.js" defer></script>
   </head>
   <body>
@@ -191,7 +193,7 @@
               </section>
 
               <section class="panel">
-                <div class="panel-heading"><h3>Top 5 auf diesem PC</h3><span>LOCAL</span></div>
+                <div class="panel-heading"><h3 id="result-leaderboard-title">Top 5 auf diesem PC</h3><span id="result-leaderboard-status">LOCAL</span></div>
                 <ol class="leaderboard-list compact-list" id="result-leaderboard"></ol>
               </section>
             </div>
@@ -207,7 +209,7 @@
 
     <dialog class="leaderboard-dialog" id="leaderboard-dialog">
       <div class="dialog-head">
-        <div><span class="eyebrow">Dieser PC</span><h2>Bestenliste</h2></div>
+        <div><span class="eyebrow" id="leaderboard-source">Dieser PC</span><h2>Bestenliste</h2></div>
         <button class="icon-button" id="close-leaderboard" type="button" aria-label="Bestenliste schließen">×</button>
       </div>
       <ol class="leaderboard-list" id="leaderboard-list"></ol>

@@ -43,12 +43,14 @@
   const maxScore = questions.reduce((sum, question) => sum + question.points, 0);
   const leaderboardKey = "brand-color-battle-leaderboard-v1";
   const soundKey = "brand-color-battle-sound-v1";
+  const scoreStore = window.BRAND_COLOR_BATTLE_SCORES || createLocalScoreStore();
 
   const state = {
     questionIndex: 0,
     score: 0,
     selectedIndex: null,
     answered: false,
+    completed: false,
     playerName: "Gast",
     roundScores: config.rounds.map(() => 0),
     mixerValue: null,
@@ -81,6 +83,11 @@
   const leaderboardDialog = document.getElementById("leaderboard-dialog");
   const leaderboardList = document.getElementById("leaderboard-list");
   const resultLeaderboard = document.getElementById("result-leaderboard");
+  const leaderboardSource = document.getElementById("leaderboard-source");
+  const resultLeaderboardTitle = document.getElementById("result-leaderboard-title");
+  const resultLeaderboardStatus = document.getElementById("result-leaderboard-status");
+  const clearLeaderboardButton = document.getElementById("clear-leaderboard");
+  const nicknameNote = document.getElementById("nickname-note");
   const liveRegion = document.getElementById("live-region");
   const soundButton = document.getElementById("sound-button");
   const soundIcon = document.getElementById("sound-icon");
@@ -99,6 +106,7 @@
     state.score = 0;
     state.selectedIndex = null;
     state.answered = false;
+    state.completed = false;
     state.roundScores = config.rounds.map(() => 0);
     state.mixerValue = null;
     headerStatus.hidden = false;
@@ -418,6 +426,7 @@
   }
 
   function goToNextQuestion() {
+    if (state.completed) return;
     const previousRound = questions[state.questionIndex].roundIndex;
     state.questionIndex += 1;
 
@@ -436,8 +445,10 @@
   }
 
   function showResults() {
+    if (state.completed) return;
+    state.completed = true;
     headerStatus.hidden = true;
-    saveScore(state.playerName, state.score);
+    scoreStore.save(state.playerName, state.score);
     const rank = getRank(state.score);
     document.getElementById("final-score").textContent = formatNumber(state.score);
     document.getElementById("max-score").textContent = formatNumber(maxScore);
@@ -493,32 +504,47 @@
     headerScore.textContent = `${formatNumber(state.score)} P`;
   }
 
-  function saveScore(name, score) {
-    const entries = getLeaderboard();
-    entries.push({ name, score, timestamp: Date.now() });
-    entries.sort((a, b) => b.score - a.score || a.timestamp - b.timestamp);
-    writeStorage(leaderboardKey, JSON.stringify(entries.slice(0, 10)));
-  }
-
-  function getLeaderboard() {
-    try {
-      const parsed = JSON.parse(readStorage(leaderboardKey, "[]"));
-      return Array.isArray(parsed)
-        ? parsed.filter((entry) =>
-            entry &&
-            typeof entry.name === "string" &&
-            Number.isFinite(entry.score) &&
-            entry.score >= 0 &&
-            entry.score <= maxScore
-          )
-        : [];
-    } catch {
-      return [];
+  function createLocalScoreStore() {
+    function getLocalEntries() {
+      try {
+        const parsed = JSON.parse(readStorage(leaderboardKey, "[]"));
+        return Array.isArray(parsed)
+          ? parsed
+              .filter((entry) =>
+                entry &&
+                typeof entry.name === "string" &&
+                Number.isFinite(entry.score) &&
+                entry.score >= 0 &&
+                entry.score <= maxScore
+              )
+              .sort((a, b) => b.score - a.score || a.timestamp - b.timestamp)
+              .slice(0, 10)
+          : [];
+      } catch {
+        return [];
+      }
     }
+
+    return {
+      enabled: false,
+      init() {},
+      subscribe() { return () => {}; },
+      save(name, score) {
+        const entries = getLocalEntries();
+        entries.push({ name, score, timestamp: Date.now() });
+        entries.sort((a, b) => b.score - a.score || a.timestamp - b.timestamp);
+        writeStorage(leaderboardKey, JSON.stringify(entries.slice(0, 10)));
+      },
+      getEntries(limit = 10) { return getLocalEntries().slice(0, limit); },
+      getLocalEntries,
+      getStatus() { return { enabled: false, mode: "local", pending: 0, syncing: false }; },
+      clearLocal() { writeStorage(leaderboardKey, "[]"); },
+      refresh() { return Promise.resolve(false); }
+    };
   }
 
   function renderLeaderboard(container, limit = 10) {
-    const entries = getLeaderboard().slice(0, limit);
+    const entries = scoreStore.getEntries(limit);
     container.innerHTML = "";
     if (!entries.length) {
       const empty = document.createElement("li");
@@ -540,6 +566,7 @@
 
   function openLeaderboard() {
     renderLeaderboard(leaderboardList);
+    scoreStore.refresh?.().catch(() => {});
     if (typeof leaderboardDialog.showModal === "function") leaderboardDialog.showModal();
     else leaderboardDialog.setAttribute("open", "");
   }
@@ -551,17 +578,35 @@
 
   function clearLeaderboard() {
     if (!window.confirm("Bestenliste auf diesem PC wirklich löschen?")) return;
-    writeStorage(leaderboardKey, "[]");
+    scoreStore.clearLocal();
     renderLeaderboard(leaderboardList);
     renderLeaderboard(resultLeaderboard, 5);
     updateLocalBest();
   }
 
   function updateLocalBest() {
-    const best = getLeaderboard()[0];
+    const best = scoreStore.getLocalEntries()[0];
     document.getElementById("local-best").textContent = best
       ? `Highscore: ${best.name} · ${formatNumber(best.score)} P`
       : "Noch kein Highscore";
+  }
+
+  function updateLeaderboardPresentation() {
+    const status = scoreStore.getStatus();
+    const globalMode = status.mode === "global";
+    const offlineMode = status.enabled && !globalMode;
+
+    leaderboardSource.textContent = globalMode ? "Alle Messe-PCs" : offlineMode ? "Offline-Fallback" : "Dieser PC";
+    resultLeaderboardTitle.textContent = globalMode ? "Top 5 insgesamt" : "Top 5 auf diesem PC";
+    resultLeaderboardStatus.textContent = globalMode ? "GLOBAL" : offlineMode ? "OFFLINE" : "LOCAL";
+    clearLeaderboardButton.hidden = globalMode;
+    nicknameNote.textContent = status.enabled
+      ? "Keine Anmeldung. Ergebnisse werden gemeinsam gespeichert; offline werden sie automatisch vorgemerkt."
+      : "Keine Anmeldung. Dein Ergebnis bleibt nur auf diesem PC.";
+
+    renderLeaderboard(leaderboardList);
+    renderLeaderboard(resultLeaderboard, 5);
+    updateLocalBest();
   }
 
   function returnHome(force = false) {
@@ -718,7 +763,7 @@
   document.getElementById("open-leaderboard").addEventListener("click", openLeaderboard);
   document.getElementById("close-leaderboard").addEventListener("click", closeLeaderboard);
   document.getElementById("close-leaderboard-bottom").addEventListener("click", closeLeaderboard);
-  document.getElementById("clear-leaderboard").addEventListener("click", clearLeaderboard);
+  clearLeaderboardButton.addEventListener("click", clearLeaderboard);
   document.getElementById("fullscreen-button").addEventListener("click", toggleFullscreen);
   soundButton.addEventListener("click", toggleSound);
   document.addEventListener("keydown", handleKeyboard);
@@ -727,6 +772,8 @@
   });
 
   document.getElementById("max-score").textContent = formatNumber(maxScore);
+  scoreStore.init({ maxScore });
+  scoreStore.subscribe(updateLeaderboardPresentation);
   updateSoundButton();
-  updateLocalBest();
+  updateLeaderboardPresentation();
 })();
