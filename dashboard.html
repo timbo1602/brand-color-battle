@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090b12" />
+    <meta
+      name="description"
+      content="Globales Live-Dashboard der Brand Color Battle mit Rangliste, Statistiken und aktuellen Ergebnissen."
+    />
+    <title>Globales Dashboard · Brand Color Battle</title>
+    <link rel="stylesheet" href="./css/style.css?v=20260917-3" />
+    <link rel="stylesheet" href="./css/dashboard.css?v=20260917-2" />
+    <script src="./js/config.js?v=20260917-2" defer></script>
+    <script src="./js/dashboard.js?v=20260917-2" defer></script>
+  </head>
+  <body class="dashboard-page">
+    <div class="color-rail" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="dashboard-shell">
+      <header class="app-header dashboard-header">
+        <a class="brand-button" href="./index.html" aria-label="Zurück zum Quiz">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>BRAND COLOR <b>BATTLE</b></span>
+        </a>
+
+        <div class="dashboard-live" id="connection-status" role="status">
+          <i aria-hidden="true"></i>
+          <span>Verbinde …</span>
+        </div>
+
+        <div class="dashboard-actions">
+          <button class="secondary-button dashboard-fullscreen" id="toggle-fullscreen" type="button" title="Vollbild starten (F)">
+            <span aria-hidden="true">⛶</span>
+            <span id="fullscreen-label">Vollbild</span>
+          </button>
+          <a class="secondary-button dashboard-back" href="./index.html">
+            <span aria-hidden="true">←</span> Zum Quiz
+          </a>
+        </div>
+      </header>
+
+      <main class="dashboard-main">
+        <section class="dashboard-intro" aria-labelledby="dashboard-title">
+          <div>
+            <p class="eyebrow">Globale Bestenliste</p>
+            <h1 id="dashboard-title">Color Battle <span>Live</span></h1>
+          </div>
+          <div class="dashboard-refresh-block">
+            <span id="last-updated">Noch nicht aktualisiert</span>
+            <button class="icon-button" id="refresh-dashboard" type="button" aria-label="Dashboard aktualisieren" title="Aktualisieren">
+              <span aria-hidden="true">↻</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="metric-grid" aria-label="Quiz-Statistiken">
+          <article class="metric-card cyan">
+            <span>Gespielte Battles</span>
+            <strong id="metric-total">–</strong>
+            <small>auf allen Geräten</small>
+          </article>
+          <article class="metric-card magenta">
+            <span>Durchschnitt</span>
+            <strong id="metric-average">–</strong>
+            <small>von 1.200 Punkten</small>
+          </article>
+          <article class="metric-card yellow">
+            <span>Highscore</span>
+            <strong id="metric-highscore">–</strong>
+            <small id="metric-leader">noch offen</small>
+          </article>
+          <article class="metric-card green">
+            <span>Perfekte Runs</span>
+            <strong id="metric-perfect">–</strong>
+            <small>mit 1.200 Punkten</small>
+          </article>
+        </section>
+
+        <div class="dashboard-grid">
+          <section class="dashboard-panel leaderboard-panel" aria-labelledby="global-ranking-title">
+            <div class="dashboard-panel-head">
+              <div>
+                <p class="eyebrow">Alle Messe-PCs</p>
+                <h2 id="global-ranking-title">Globale Top 10</h2>
+              </div>
+              <span class="data-badge">LIVE</span>
+            </div>
+            <ol class="global-ranking" id="global-ranking" aria-live="polite">
+              <li class="dashboard-placeholder">Bestenliste wird geladen …</li>
+            </ol>
+          </section>
+
+          <section class="dashboard-panel activity-panel" aria-labelledby="activity-title">
+            <div class="dashboard-panel-head">
+              <div>
+                <p class="eyebrow">Zuletzt gespielt</p>
+                <h2 id="activity-title">Neue Ergebnisse</h2>
+              </div>
+            </div>
+            <ol class="activity-list" id="recent-results" aria-live="polite">
+              <li class="dashboard-placeholder">Aktivität wird geladen …</li>
+            </ol>
+          </section>
+        </div>
+
+        <p class="dashboard-message" id="dashboard-message" role="status" hidden></p>
+      </main>
+
+      <footer class="app-footer dashboard-footer">
+        <span>Mediengestaltung Digital &amp; Print</span>
+        <span>Automatische Aktualisierung alle 30 Sekunden</span>
+      </footer>
+    </div>
+  </body>
+</html>

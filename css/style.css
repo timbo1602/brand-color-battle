@@ -332,6 +332,7 @@ input[type="text"]::placeholder {
   color: var(--text);
   background: none;
   font-weight: 700;
+  text-decoration: none;
   cursor: pointer;
 }
 

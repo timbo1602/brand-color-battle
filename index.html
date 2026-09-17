@@ -15,7 +15,7 @@
       type="image/svg+xml"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b12'/%3E%3Ccircle cx='23' cy='25' r='13' fill='%2300d9ff'/%3E%3Ccircle cx='41' cy='25' r='13' fill='%23ff2e9a' fill-opacity='.85'/%3E%3Ccircle cx='32' cy='41' r='13' fill='%23ffe14f' fill-opacity='.85'/%3E%3C/svg%3E"
     />
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/style.css?v=20260917-3" />
     <script src="./js/config.js?v=20260917-2" defer></script>
     <script src="./js/questions.js?v=20260917-2" defer></script>
     <script src="./js/supabase.js?v=20260917-2" defer></script>
@@ -79,6 +79,7 @@
 
               <div class="start-actions">
                 <button class="text-button" id="open-leaderboard" type="button">Bestenliste ansehen</button>
+                <a class="text-button" href="./dashboard.html">Globales Dashboard</a>
                 <span id="local-best">Noch kein Highscore</span>
               </div>
             </div>
@@ -215,6 +216,7 @@
       <ol class="leaderboard-list" id="leaderboard-list"></ol>
       <div class="dialog-actions">
         <button class="text-button danger" id="clear-leaderboard" type="button">Bestenliste löschen</button>
+        <a class="text-button" href="./dashboard.html">Globales Dashboard</a>
         <button class="secondary-button" id="close-leaderboard-bottom" type="button">Schließen</button>
       </div>
     </dialog>

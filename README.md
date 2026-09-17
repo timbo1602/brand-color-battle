@@ -6,17 +6,22 @@ Brand Color Battle ist ein interaktives Farbenquiz für die Berufsmesse im Berei
 
 Die Web-App besteht ausschließlich aus HTML, CSS und JavaScript. Sie benötigt kein Framework, keinen Build-Schritt und keinen Server. Sounds werden über die Web Audio API direkt im Browser erzeugt.
 
+Das globale Dashboard unter `dashboard.html` zeigt Live-Statistiken, die Top 10 und die neuesten Ergebnisse aus Supabase. Über den Vollbild-Button oder die Taste `F` wechselt es in eine bildschirmfüllende Ansicht für große Messe-Displays.
+
 ## Projektstruktur
 
 ```text
 .
 ├── index.html
+├── dashboard.html
 ├── css/
+│   ├── dashboard.css
 │   └── style.css
 ├── js/
 │   ├── app.js
 │   ├── config.js
 │   ├── config.example.js
+│   ├── dashboard.js
 │   ├── questions.js
 │   └── supabase.js
 ├── assets/
