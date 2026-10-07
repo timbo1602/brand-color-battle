@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080a12" />
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="Color Catch – The Forbidden Print Run. Ein geheimes Minigame der CTRL + CREATE ARCADE." />
+    <title>Color Catch · CTRL + CREATE ARCADE</title>
+    <link rel="stylesheet" href="../../css/shared.css?v=20261007-1" />
+    <link rel="stylesheet" href="./game.css?v=20261007-1" />
+    <script src="./game.js?v=20261007-1" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#game">Direkt zum Spiel</a>
+    <div class="print-grid" aria-hidden="true"></div>
+
+    <div class="catch-shell">
+      <header class="game-header">
+        <a class="mini-logo" href="../../" aria-label="Zurück zur CTRL + CREATE ARCADE">
+          <span aria-hidden="true">C&gt;</span><strong>CTRL + CREATE <i>ARCADE</i></strong>
+        </a>
+        <span class="secret-badge">SECRET GAME // 001</span>
+        <a class="back-link" href="../../"><span aria-hidden="true">←</span> Zurück zur Arcade</a>
+      </header>
+
+      <main class="game-main" id="game">
+        <section class="game-intro" aria-labelledby="game-title">
+          <div>
+            <p class="eyebrow">THE FORBIDDEN PRINT RUN</p>
+            <h1 id="game-title">COLOR <span>CATCH</span></h1>
+          </div>
+          <p>Fang saubere CMYK-Farben. Weiche grauen Print Errors aus. Die Druckmaschine wird jede Sekunde schneller.</p>
+        </section>
+
+        <section class="game-machine" aria-label="Color Catch Spielfeld">
+          <div class="machine-lights" aria-hidden="true"><i></i><i></i><i></i></div>
+
+          <div class="hud" aria-label="Spielstand">
+            <div><span>SCORE</span><strong id="score-value">000</strong></div>
+            <div><span>ZEIT</span><strong id="time-value">40.0</strong></div>
+            <div><span>FEHLER</span><strong id="lives-value" aria-label="Drei Leben">● ● ●</strong></div>
+            <div><span>HIGHSCORE</span><strong id="highscore-value">000</strong></div>
+          </div>
+
+          <div class="canvas-wrap" id="canvas-wrap">
+            <canvas id="game-canvas" width="960" height="580" aria-label="Color Catch Spielfeld. Steuere den Druckkopf mit den Pfeiltasten oder A und D."></canvas>
+            <div class="screen-overlay" id="start-overlay">
+              <div class="cmyk-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+              <p class="eyebrow">PRINT QUEUE READY</p>
+              <h2>Die verbotene<br />Druckrunde startet.</h2>
+              <p>CMYK einsammeln, graue Fehlfarben vermeiden. Du hast 40 Sekunden und drei Leben.</p>
+              <button class="button button-primary" id="start-button" type="button">Drucklauf starten <span aria-hidden="true">→</span></button>
+              <small>Steuerung: ← → oder A D</small>
+            </div>
+
+            <div class="screen-overlay result-overlay" id="result-overlay" hidden>
+              <p class="eyebrow">PRINT RUN COMPLETE</p>
+              <h2 id="result-title">Drucklauf beendet</h2>
+              <div class="final-score"><strong id="final-score">0</strong><span>PUNKTE</span></div>
+              <p id="result-message">Die Druckmaschine wartet auf deine nächste Runde.</p>
+              <div class="result-actions">
+                <button class="button button-primary" id="restart-button" type="button">Noch einmal spielen</button>
+                <a class="button secondary-action" href="../../">Zurück zur Arcade</a>
+              </div>
+            </div>
+
+            <div class="pause-label" id="pause-label" role="status" hidden>PAUSIERT</div>
+          </div>
+
+          <div class="touch-controls" aria-label="Touch-Steuerung">
+            <button id="move-left" type="button" aria-label="Nach links bewegen"><span aria-hidden="true">←</span><small>LINKS</small></button>
+            <div><span>DRAG</span><small>Du kannst auch direkt im Spielfeld ziehen</small></div>
+            <button id="move-right" type="button" aria-label="Nach rechts bewegen"><span aria-hidden="true">→</span><small>RECHTS</small></button>
+          </div>
+        </section>
+
+        <section class="legend" aria-label="Spielregeln">
+          <div class="legend-colors"><span class="cyan"></span><span class="magenta"></span><span class="yellow"></span><span class="black"></span><p><strong>CMYK</strong> +10 Punkte</p></div>
+          <div class="legend-error"><span></span><p><strong>PRINT ERROR</strong> −15 Punkte &amp; 1 Leben</p></div>
+          <p class="legend-speed"><strong>SPEED</strong> steigt während der Runde</p>
+        </section>
+      </main>
+
+      <footer class="game-footer"><span>LOCAL HIGHSCORE // Dieses Gerät</span><span>NO CONTINUES. JUST REPRINT.</span></footer>
+    </div>
+    <div class="sr-live" id="game-live" aria-live="polite"></div>
+  </body>
+</html>

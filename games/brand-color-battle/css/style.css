@@ -148,6 +148,27 @@ input:focus-visible,
   gap: 8px;
 }
 
+.all-games-link {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 14px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 800;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.all-games-link:hover {
+  border-color: var(--cyan);
+  background: rgba(0, 217, 255, 0.07);
+  color: var(--cyan);
+}
+
 .icon-button {
   display: inline-grid;
   width: 42px;
@@ -1278,6 +1299,9 @@ input[type="range"]::-moz-range-thumb {
     grid-column: 2;
     grid-row: 1;
   }
+
+  .all-games-link span:last-child { display: none; }
+  .all-games-link { width: 40px; justify-content: center; padding: 0; }
 
   .game-stage {
     width: min(100% - 24px, 1180px);

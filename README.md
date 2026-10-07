@@ -1,109 +1,145 @@
-# Brand Color Battle
+# CTRL + CREATE ARCADE
 
-**Brand Color Battle** ist ein interaktives Browser-Quiz für eine Berufsmesse im Bereich **Mediengestaltung Digital und Print**. Die Teilnehmenden testen in vier Runden ihr Wissen über Markenfarben, Farbpaletten, Farbmischung sowie digitale und gedruckte Gestaltung.
+**CTRL + CREATE ARCADE** ist ein browserbasierter Spiele- und Quiz-Hub für die Berufsmesse im Bereich **Mediengestaltung Digital und Print**. Die Plattform verbindet kurze, hochwertige Challenges aus Design, Medien, Gaming und Allgemeinwissen – ohne Framework, Build-Schritt oder externe Bibliotheken.
 
-Das Quiz umfasst zwölf Aufgaben mit insgesamt maximal 1.200 Punkten. Die Ergebnisse werden lokal gespeichert und bei bestehender Internetverbindung zusätzlich in einer gemeinsamen Supabase-Bestenliste veröffentlicht.
+Während des Messe-Specials ist **Brand Color Battle** das regulär freigeschaltete Hauptspiel. Weitere Spielkarten geben bereits einen Ausblick auf die spätere Arcade. Ein geheimes, vollständig spielbares Minigame wartet außerdem auf alle, die klassische Arcade-Easter-Eggs kennen.
 
 ## Projektlinks
 
-- [Quiz auf GitHub Pages](https://timbo1602.github.io/brand-color-battle/)
-- [Globales Live-Dashboard](https://timbo1602.github.io/brand-color-battle/dashboard.html)
+- [CTRL + CREATE ARCADE auf GitHub Pages](https://timbo1602.github.io/brand-color-battle/)
+- [Brand Color Battle direkt öffnen](https://timbo1602.github.io/brand-color-battle/games/brand-color-battle/)
+- [Globales Live-Dashboard](https://timbo1602.github.io/brand-color-battle/games/brand-color-battle/dashboard.html)
 - [GitHub-Repository](https://github.com/timbo1602/brand-color-battle)
 
-## Funktionen
+## Spiele
+
+### Brand Color Battle · verfügbar
+
+Das bestehende Farbenquiz bleibt inhaltlich und technisch erhalten:
 
 - vier Runden mit jeweils drei Aufgaben
-- verschiedene Fragetypen zu Farben, Marken und Gestaltung
-- interaktiver Farbmischer
-- Punktevergabe mit maximal 1.200 Punkten
-- lokale Top-10-Bestenliste auf jedem Gerät
-- gemeinsame Bestenliste über Supabase
+- maximal 1.200 Punkte
+- Markenfarben, Farbpaletten, Farbmischung und Produktionswissen
+- lokale Top-10-Bestenliste und optionale gemeinsame Supabase-Bestenliste
 - Offline-Warteschlange für noch nicht übertragene Ergebnisse
-- Sounds für Spielstart, Antworten, Rundenwechsel und Abschluss
-- Sound-Schalter, Neustart und Vollbildmodus
-- separates Live-Dashboard für große Messe-Displays
-- responsive Darstellung für Desktop, Tablet und Smartphone
+- Auswahl-, Richtig-, Falsch-, Runden- und Abschluss-Sounds
+- Sound-Schalter, Vollbildmodus, Neustart und Ergebnis-Chamäleon
+- separates Live-Dashboard für Messe-Displays
 
-## Bedienung
+### The Big Pub Quiz · geplant
 
-1. Auf der Startseite einen Spitznamen eingeben und das Battle starten.
-2. Die zwölf Aufgaben in vier Runden beantworten.
-3. Nach dem letzten Ergebnis die eigene Punktzahl und Bestenliste ansehen.
-4. Über **Globales Dashboard** die gemeinsame Rangliste aller Geräte öffnen.
-5. Das Dashboard über den Button **Vollbild** oder die Taste `F` für einen großen Bildschirm aktivieren.
+Das geplante Pub Quiz bekommt Kategorien für Allgemeinwissen, Musik, Film, Internet, Gaming und unnützes Wissen. Die technische Platzhalterstruktur trennt Fragen bereits von der Benutzeroberfläche und ist auf Multiple Choice, Medienfragen, Zeitbonus sowie Solo- und Teammodus vorbereitet. Es werden noch keine erfundenen Fragen ausgeliefert.
 
-## Technik
+### Logo Detective · geplant
 
-Die Anwendung besteht aus reinem **HTML, CSS und JavaScript**. Sie verwendet kein Framework und benötigt weder einen Build-Schritt noch einen eigenen App-Server.
+Eine weitere spätere Challenge rund um Formen, Markendetails und schrittweise visuelle Hinweise. Die Karte ist im Hub sichtbar, während des Messemodus aber gesperrt.
 
-- Hosting: GitHub Pages
-- Datenbank und REST-API: Supabase
-- Audio: Web Audio API
-- lokale Speicherung: Web Storage API (`localStorage`)
-- Veröffentlichung: GitHub Actions
+### Geheimes Minigame
 
-Das Quiz bleibt auch ohne Internetverbindung nutzbar. Das globale Dashboard und die geräteübergreifende Bestenliste benötigen eine Internetverbindung.
+**Color Catch – The Forbidden Print Run** ist nicht als normale Spielkarte sichtbar. Das Easter Egg lässt sich auf der Hub-Seite über eine bekannte klassische Arcade-Tastenfolge öffnen. Auf Touchscreens steht ein unauffälliges Signal-Pad bereit.
+
+Im Spiel werden CMYK-Farben mit einem Druckkopf gesammelt, während graue Print Errors vermieden werden müssen. Eine Runde dauert 40 Sekunden. Geschwindigkeit, Punkte, Leben und lokaler Highscore werden vollständig im Browser verwaltet.
+
+## Messemodus und Freischaltung
+
+Die zentrale Konfiguration liegt in [`js/hub-config.js`](./js/hub-config.js):
+
+```javascript
+window.HUB_CONFIG = {
+  fairMode: true,
+  unlockAllGames: false,
+  games: {
+    // ...
+  }
+};
+```
+
+- `fairMode: true`: Nur dauerhaft freigegebene Spiele wie Brand Color Battle sind sichtbar spielbar.
+- Nach der Messe: `fairMode` auf `false` setzen. Alle Spiele mit `ready: true` werden automatisch freigeschaltet.
+- `unlockAllGames: true`: optionale Vorschau-Freischaltung, ohne den Messemodus dauerhaft zu ändern.
+- Ein noch unfertiges Spiel behält `ready: false` und bleibt dadurch auch außerhalb des Messemodus gesperrt.
+- Das geheime Minigame ist unabhängig vom Messemodus weiterhin über das Easter Egg erreichbar.
+
+Damit nach der Messe tatsächlich nur ein Wert geändert werden muss, werden fertiggestellte Spiele bereits bei ihrer Entwicklung auf `ready: true` gesetzt. Zum öffentlichen Freischalttermin wird anschließend nur `fairMode` umgestellt.
 
 ## Projektstruktur
 
 ```text
 .
-├── index.html                      # Quiz
-├── dashboard.html                  # globales Live-Dashboard
+├── index.html                         # Arcade-Hub
 ├── css/
-│   ├── dashboard.css
-│   └── style.css
+│   ├── hub.css                        # Hub-Layout und Arcade-Design
+│   └── shared.css                     # gemeinsame Grundstile
 ├── js/
-│   ├── app.js                      # Spiellogik und Benutzeroberfläche
-│   ├── config.js                   # öffentliche Supabase-Konfiguration
-│   ├── config.example.js           # Konfigurationsvorlage
-│   ├── dashboard.js                # Daten und Anzeige des Dashboards
-│   ├── questions.js                # Runden und Fragen
-│   └── supabase.js                 # globale Bestenliste und Offline-Sync
-├── assets/
-│   └── congratulations-chameleon.webp
-├── .github/workflows/
-│   └── deploy-pages.yml
+│   ├── hub-config.js                  # Messemodus und Spielstatus
+│   └── hub.js                         # Hub, Locks, Sound und Easter Egg
+├── games/
+│   ├── brand-color-battle/
+│   │   ├── index.html                 # bestehendes Hauptquiz
+│   │   ├── dashboard.html             # globale Live-Bestenliste
+│   │   ├── assets/
+│   │   ├── css/
+│   │   └── js/                        # Quizfragen, Logik und Supabase
+│   ├── color-catch/
+│   │   ├── index.html                 # geheimes Minigame
+│   │   ├── game.css
+│   │   └── game.js
+│   └── pub-quiz/
+│       ├── index.html                 # technische Platzhalterseite
+│       ├── pub-quiz.css
+│       ├── pub-quiz.js
+│       └── data/questions.js          # erweiterbare Fragedaten
+├── .github/workflows/deploy-pages.yml
 ├── .nojekyll
 └── supabase-schema.sql
 ```
 
+Alle internen Ressourcen und Links verwenden relative Pfade. Dadurch funktionieren Hub und Spiele sowohl unter dem GitHub-Pages-Unterpfad `/brand-color-battle/` als auch lokal.
+
 ## Lokal starten
 
-Für einen einfachen Test genügt es, `index.html` in einem aktuellen Browser zu öffnen. Alternativ kann im Projektordner ein lokaler Webserver gestartet werden:
+Die statischen Seiten können direkt im Browser geöffnet werden. Für realistischere Pfad-, Storage- und Navigationstests empfiehlt sich ein lokaler Webserver im Repository-Stamm:
 
 ```bash
 python3 -m http.server 4173
 ```
 
-Das Quiz ist danach unter `http://127.0.0.1:4173/` erreichbar.
+Danach sind die wichtigsten Seiten erreichbar unter:
 
-## Bestenliste und Datenschutz
+- Hub: `http://127.0.0.1:4173/`
+- Brand Color Battle: `http://127.0.0.1:4173/games/brand-color-battle/`
+- Color Catch: `http://127.0.0.1:4173/games/color-catch/`
 
-Die lokale Top 10 wird ausschließlich im jeweiligen Browser gespeichert. Bei aktiver Supabase-Verbindung werden folgende Angaben in der gemeinsamen Bestenliste gespeichert:
+Für den Kernbetrieb werden keine Netzwerkressourcen geladen. Hub, Quiz und Secret Game bleiben deshalb auch ohne Internetverbindung bedienbar. Nur das globale Dashboard und die gemeinsame Bestenliste benötigen Supabase.
 
-- der eingegebene Spitzname mit maximal 18 Zeichen
-- die erreichte Punktzahl
-- der Zeitpunkt des Ergebnisses
-- eine zufällige Übertragungs-ID zur Vermeidung doppelter Einträge
+## Bestenlisten und Datenschutz
 
-Es gibt keine Benutzerkonten und die Anwendung fragt keine E-Mail-Adresse oder weiteren persönlichen Angaben ab. Spitznamen werden gekürzt und ausschließlich als Text ausgegeben.
+Brand Color Battle speichert eine lokale Top 10 im jeweiligen Browser. Bei aktiver Supabase-Verbindung werden Spitzname, Punktzahl, Zeitpunkt und eine zufällige Übertragungs-ID an die gemeinsame Bestenliste gesendet. Backend-Fehler blockieren das Quiz nicht; Ergebnisse werden lokal vorgemerkt.
 
-Falls die Internetverbindung ausfällt, merkt die App neue Ergebnisse lokal vor und überträgt sie später automatisch. Backend-Fehler blockieren das Quiz nicht.
+Color Catch verwendet vorerst ausschließlich einen lokalen Highscore. Eine spätere gemeinsame Bestenliste kann ergänzt werden, ohne den Spielablauf an ein Backend zu koppeln.
 
 ## Supabase-Konfiguration
 
-1. Ein Supabase-Projekt anlegen und `supabase-schema.sql` vollständig im SQL Editor ausführen.
-2. In `js/config.js` die Project URL als `SUPABASE_URL` und den öffentlichen Publishable Key als `SUPABASE_PUBLISHABLE_KEY` eintragen.
+1. Ein Supabase-Projekt anlegen und `supabase-schema.sql` im SQL Editor ausführen.
+2. In `games/brand-color-battle/js/config.js` die Project URL und den öffentlichen Publishable Key eintragen.
 3. Die Änderung auf `main` pushen; GitHub Pages veröffentlicht sie automatisch.
 
-Der Publishable Key ist für die Verwendung im Browser vorgesehen. Row Level Security erlaubt anonymen Besuchern ausschließlich das Lesen der Bestenliste und das Eintragen gültiger Ergebnisse. Updates und Deletes sind gesperrt. Ein Secret- oder `service_role`-Schlüssel darf niemals im Frontend verwendet werden.
+Im Frontend darf ausschließlich ein öffentlicher Publishable- beziehungsweise Anon-Key verwendet werden. Ein Secret- oder `service_role`-Schlüssel gehört niemals in diese Dateien.
+
+## Barrierefreiheit und Eingabe
+
+- semantische Überschriften, Statusmeldungen und ARIA-Beschriftungen
+- gut sichtbare Tastatur-Fokusrahmen
+- Hub und Quiz vollständig mit Tastatur bedienbar
+- Color Catch mit Pfeiltasten, `A`/`D`, großen Touch-Schaltflächen oder Ziehen im Spielfeld
+- reduzierte Animationen über `prefers-reduced-motion`
+- responsive Darstellung für Messe-PCs, Tablets und Smartphones
 
 ## Veröffentlichung
 
-Jeder Push auf `main` startet den Workflow in `.github/workflows/deploy-pages.yml`. GitHub Actions veröffentlicht anschließend den Inhalt des Repository-Stammverzeichnisses auf GitHub Pages.
+Jeder Push auf `main` startet `.github/workflows/deploy-pages.yml`. Der Workflow kann zusätzlich über `workflow_dispatch` manuell gestartet werden und veröffentlicht den gesamten statischen Repository-Inhalt auf GitHub Pages.
 
-Falls GitHub Pages in einer neuen Kopie des Repositorys noch nicht aktiviert ist, muss unter **Repository → Settings → Pages → Source** einmalig **GitHub Actions** ausgewählt werden.
+Falls Pages in einer neuen Kopie noch nicht aktiviert ist, muss unter **Repository → Settings → Pages → Source** einmalig **GitHub Actions** ausgewählt werden.
 
 ## Hinweis zu Marken
 

@@ -3,224 +3,179 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#090b12" />
+    <meta name="theme-color" content="#080a12" />
     <meta
       name="description"
-      content="Brand Color Battle – das interaktive Farbenquiz für die Berufsmesse Mediengestaltung Digital und Print."
+      content="CTRL + CREATE ARCADE – Quizze und Games rund um Design, Medien, Gaming und Wissen."
     />
-    <title>Brand Color Battle</title>
-    <link rel="preload" as="image" href="./assets/congratulations-chameleon.webp" type="image/webp" />
+    <title>CTRL + CREATE ARCADE</title>
     <link
       rel="icon"
       type="image/svg+xml"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b12'/%3E%3Ccircle cx='23' cy='25' r='13' fill='%2300d9ff'/%3E%3Ccircle cx='41' cy='25' r='13' fill='%23ff2e9a' fill-opacity='.85'/%3E%3Ccircle cx='32' cy='41' r='13' fill='%23ffe14f' fill-opacity='.85'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080a12'/%3E%3Cpath d='M13 18h38v28H13z' fill='none' stroke='%2300e5ff' stroke-width='5'/%3E%3Cpath d='M23 27h18M32 22v20' stroke='%23ff2e9a' stroke-width='5'/%3E%3C/svg%3E"
     />
-    <link rel="stylesheet" href="./css/style.css?v=20260917-3" />
-    <script src="./js/config.js?v=20260917-2" defer></script>
-    <script src="./js/questions.js?v=20260917-2" defer></script>
-    <script src="./js/supabase.js?v=20260917-2" defer></script>
-    <script src="./js/app.js?v=20260917-2" defer></script>
+    <link rel="stylesheet" href="./css/shared.css?v=20261007-1" />
+    <link rel="stylesheet" href="./css/hub.css?v=20261007-1" />
+    <script src="./js/hub-config.js?v=20261007-1" defer></script>
+    <script src="./js/hub.js?v=20261007-1" defer></script>
   </head>
   <body>
-    <div class="color-rail" aria-hidden="true">
-      <span></span><span></span><span></span><span></span>
-    </div>
+    <a class="skip-link" href="#spiele">Direkt zu den Spielen</a>
+    <div class="page-noise" aria-hidden="true"></div>
+    <div class="neon-orb orb-cyan" aria-hidden="true"></div>
+    <div class="neon-orb orb-magenta" aria-hidden="true"></div>
 
-    <div class="app-shell">
-      <header class="app-header">
-        <button class="brand-button" id="home-button" type="button" aria-label="Zur Startseite">
-          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span>BRAND COLOR <b>BATTLE</b></span>
+    <div class="hub-shell">
+      <header class="hub-header">
+        <a class="arcade-logo" href="./" aria-label="CTRL + CREATE ARCADE Startseite">
+          <span class="logo-prompt" aria-hidden="true">C&gt;</span>
+          <span class="logo-copy"><strong>CTRL + CREATE</strong><small>ARCADE</small></span>
+        </a>
+
+        <div class="hub-status" role="status" aria-label="Aktueller Arcade-Status">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="fair-status">MESSE-SPECIAL AKTIV</span>
+        </div>
+
+        <button class="icon-control" id="hub-sound" type="button" aria-label="Arcade-Sound ausschalten" title="Sound an/aus">
+          <span id="hub-sound-icon" aria-hidden="true">♪</span>
         </button>
-
-        <div class="header-status" id="header-status" hidden>
-          <span id="header-question">01 / 12</span>
-          <strong id="header-score">0 P</strong>
-        </div>
-
-        <div class="header-actions">
-          <button class="icon-button" id="sound-button" type="button" aria-label="Ton ausschalten" title="Ton an/aus">
-            <span id="sound-icon" aria-hidden="true">♪</span>
-          </button>
-          <button class="icon-button" id="fullscreen-button" type="button" aria-label="Vollbild öffnen" title="Vollbild">
-            <span aria-hidden="true">⛶</span>
-          </button>
-        </div>
       </header>
 
-      <main class="game-stage" id="game-stage">
-        <section class="screen start-screen is-active" id="start-screen" aria-labelledby="start-title">
-          <div class="start-layout">
-            <div class="start-copy">
-              <p class="eyebrow">Das Farbquiz für Markenkenner</p>
-              <h1 id="start-title">Wie gut ist dein <span>Farbgedächtnis?</span></h1>
-              <p class="intro">
-                Zwölf Aufgaben. Vier Runden. Farben erkennen, Marken zuordnen und im Color Lab selbst mischen.
-              </p>
-
-              <form class="start-form" id="start-form">
-                <label for="nickname">Dein Name im Ranking</label>
-                <div class="input-row">
-                  <input
-                    id="nickname"
-                    name="nickname"
-                    type="text"
-                    maxlength="18"
-                    autocomplete="off"
-                    placeholder="Spitzname"
-                    aria-describedby="nickname-note"
-                  />
-                  <button class="primary-button" type="submit">
-                    Battle starten <span aria-hidden="true">→</span>
-                  </button>
-                </div>
-                <p class="field-note" id="nickname-note">Keine Anmeldung. Dein Ergebnis bleibt nur auf diesem PC.</p>
-              </form>
-
-              <div class="start-actions">
-                <button class="text-button" id="open-leaderboard" type="button">Bestenliste ansehen</button>
-                <a class="text-button" href="./dashboard.html">Globales Dashboard</a>
-                <span id="local-best">Noch kein Highscore</span>
-              </div>
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="eyebrow"><span>NEW SESSION</span> / BERUFSMESSE</p>
+            <h1 id="hero-title">Quizze. Spiele.<br /><em>Zeig, was du kannst.</em></h1>
+            <p class="hero-intro">
+              Teste dein Wissen, knacke Highscores und entdecke neue Challenges aus Design, Medien, Gaming und Allgemeinwissen.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="./games/brand-color-battle/">
+                Brand Color Battle starten <span aria-hidden="true">→</span>
+              </a>
+              <a class="text-link" href="#spiele">Alle Games ansehen <span aria-hidden="true">↓</span></a>
             </div>
-
-            <aside class="game-card" aria-label="Spielübersicht">
-              <div class="game-card-top">
-                <span>QUIZ FORMAT</span>
-                <strong>4 × 3</strong>
-              </div>
-              <ol class="round-list">
-                <li><span>01</span><div><strong>Farbgedächtnis</strong><small>Markenfarben erkennen</small></div></li>
-                <li><span>02</span><div><strong>Brand Match</strong><small>Paletten zuordnen</small></div></li>
-                <li><span>03</span><div><strong>Color Lab</strong><small>Farben selbst mischen</small></div></li>
-                <li><span>04</span><div><strong>Design Check</strong><small>Wissen anwenden</small></div></li>
-              </ol>
-              <div class="difficulty-key" aria-label="Schwierigkeitsstufen">
-                <span><i class="dot easy"></i>Leicht</span>
-                <span><i class="dot medium"></i>Mittel</span>
-                <span><i class="dot hard"></i>Schwer</span>
-              </div>
-            </aside>
           </div>
+
+          <aside class="hero-console" aria-label="Messe-Special">
+            <div class="console-topline"><span>LIVE EVENT</span><i aria-hidden="true"></i></div>
+            <div class="console-display" aria-hidden="true">
+              <span class="display-c">C</span><span class="display-m">M</span><span class="display-y">Y</span><span class="display-k">K</span>
+            </div>
+            <p><strong>Brand Color Battle</strong> ist jetzt spielbar. Weitere Spiele werden nach der Messe freigeschaltet.</p>
+            <dl>
+              <div><dt>RUN</dt><dd>12 Fragen</dd></div>
+              <div><dt>MAX</dt><dd>1.200 P</dd></div>
+              <div><dt>MODE</dt><dd>Solo</dd></div>
+            </dl>
+          </aside>
         </section>
 
-        <section class="screen round-screen" id="round-screen" aria-labelledby="round-title">
-          <div class="round-number" id="round-number">01</div>
-          <p class="eyebrow" id="round-label">Runde 1 von 4</p>
-          <h2 id="round-title">Farbgedächtnis</h2>
-          <p id="round-description">Erkennst du Marken allein an ihrem Farbton?</p>
-          <div class="round-dots" aria-hidden="true"><i></i><i></i><i></i></div>
-          <button class="primary-button" id="round-start-button" type="button">
-            Runde starten <span aria-hidden="true">→</span>
-          </button>
-        </section>
-
-        <section class="screen quiz-screen" id="quiz-screen" aria-labelledby="question-title">
-          <div class="quiz-topline">
+        <section class="games-section" id="spiele" aria-labelledby="games-title">
+          <div class="section-heading">
             <div>
-              <span class="round-tag" id="quiz-round">Runde 1 · Farbgedächtnis</span>
-              <span class="difficulty-badge easy" id="difficulty-badge">Leicht</span>
+              <p class="eyebrow">GAME SELECT</p>
+              <h2 id="games-title">Wähle deine Challenge</h2>
             </div>
-            <span class="question-points" id="question-points">+50 P</span>
+            <p><span id="available-count">1</span> von 3 Games verfügbar</p>
           </div>
 
-          <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
-
-          <div class="question-copy">
-            <p class="question-kicker" id="question-kicker">Markenfarbe erkennen</p>
-            <h2 id="question-title">Welche Farbe gehört zu YouTube?</h2>
-            <p id="question-instruction">Wähle die richtige Farbe aus.</p>
-          </div>
-
-          <div class="answer-area" id="answer-area"></div>
-
-          <div class="quiz-actions" id="quiz-actions">
-            <button class="primary-button" id="submit-answer" type="button" disabled>
-              Antwort prüfen
-            </button>
-          </div>
-
-          <div class="feedback-card" id="feedback-card" aria-live="polite" hidden>
-            <div class="feedback-icon" id="feedback-icon" aria-hidden="true">✓</div>
-            <div class="feedback-copy">
-              <div class="feedback-heading">
-                <strong id="feedback-title">Richtig!</strong>
-                <span id="feedback-points">+50 Punkte</span>
+          <div class="game-grid">
+            <article class="game-tile featured" data-game-id="brandColorBattle" data-ready="true">
+              <div class="tile-art color-battle-art" aria-hidden="true">
+                <span class="art-number">01</span>
+                <div class="color-stack"><i></i><i></i><i></i><i></i></div>
+                <span class="art-label">SPOT THE SHADE</span>
               </div>
-              <p id="feedback-text"></p>
-              <div id="feedback-comparison"></div>
-            </div>
-            <button class="primary-button compact" id="next-question" type="button">
-              Weiter <span aria-hidden="true">→</span>
-            </button>
+              <div class="tile-body">
+                <span class="game-state is-live"><i aria-hidden="true"></i> Jetzt spielbar</span>
+                <h3>Brand Color Battle</h3>
+                <p>Erkenne Markenfarben, mische Farbtöne und beweise dein Designwissen.</p>
+                <div class="game-meta"><span>12 Fragen</span><span>4 Runden</span><span>bis 1.200 Punkte</span></div>
+                <a class="button button-primary tile-action" href="./games/brand-color-battle/">
+                  Quiz starten <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="game-tile is-locked" data-game-id="pubQuiz" data-ready="false" data-route="./games/pub-quiz/" tabindex="0" aria-label="The Big Pub Quiz, nach der Messe verfügbar">
+              <div class="tile-art pub-art" aria-hidden="true">
+                <span class="art-number">02</span>
+                <div class="quiz-bubbles"><i>?</i><i>!</i><i>?</i></div>
+                <span class="art-label">KNOW A LITTLE ABOUT A LOT</span>
+              </div>
+              <div class="tile-body">
+                <span class="game-state"><span aria-hidden="true">▣</span> Nach der Messe</span>
+                <h3>The Big Pub Quiz</h3>
+                <p>Gemischte Fragen aus Allgemeinwissen, Musik, Filmen, Internet, Gaming und unnützem Wissen.</p>
+                <div class="tag-list" aria-label="Geplante Kategorien"><span>Musik</span><span>Film</span><span>Gaming</span><span>Random</span></div>
+                <button class="button button-locked tile-action" type="button" aria-disabled="true">
+                  <span aria-hidden="true">▣</span> Noch gesperrt
+                </button>
+              </div>
+            </article>
+
+            <article class="game-tile is-locked" data-game-id="logoDetective" data-ready="false" tabindex="0" aria-label="Logo Detective, nach der Messe verfügbar">
+              <div class="tile-art logo-art" aria-hidden="true">
+                <span class="art-number">03</span>
+                <div class="pixel-logo"><i></i><i></i><i></i><i></i><i></i></div>
+                <span class="art-label">FOLLOW THE VISUAL CLUES</span>
+              </div>
+              <div class="tile-body">
+                <span class="game-state"><span aria-hidden="true">▣</span> Nach der Messe</span>
+                <h3>Logo Detective</h3>
+                <p>Entschlüssle Marken anhand von Formen, Details und immer deutlicheren visuellen Hinweisen.</p>
+                <div class="tag-list" aria-label="Geplante Funktionen"><span>Logos</span><span>Hinweise</span><span>Speedrun</span></div>
+                <button class="button button-locked tile-action" type="button" aria-disabled="true">
+                  <span aria-hidden="true">▣</span> Noch gesperrt
+                </button>
+              </div>
+            </article>
           </div>
         </section>
 
-        <section class="screen result-screen" id="result-screen" aria-labelledby="result-title">
-          <div class="result-grid">
-            <div class="result-main">
-              <p class="eyebrow">Battle beendet</p>
-              <h2 id="result-title">Starkes Farbgefühl!</h2>
-              <div class="score-lockup">
-                <strong id="final-score">0</strong>
-                <span>von <b id="max-score">1.200</b> Punkten</span>
-              </div>
-              <div class="rank-badge" id="rank-badge">COLOR ROOKIE</div>
-              <p class="result-message" id="result-message"></p>
-
-              <div class="result-actions">
-                <button class="primary-button" id="restart-button" type="button">Noch einmal spielen</button>
-                <button class="secondary-button" id="result-home-button" type="button">Zur Startseite</button>
-              </div>
-            </div>
-
-            <div class="result-details">
-              <figure class="victory-meme">
-                <img
-                  src="./assets/congratulations-chameleon.webp"
-                  alt="Jubelndes, buntes Chamäleon mit Farbfächer und Konfetti"
-                  width="1200"
-                  height="800"
-                />
-                <figcaption>
-                  <span>CONGRATULATIONS!</span>
-                  <strong>Du hast das Farbchaos überlebt.</strong>
-                </figcaption>
-              </figure>
-
-              <section class="panel">
-                <div class="panel-heading"><h3>Deine Runden</h3><span id="result-name"></span></div>
-                <div class="breakdown-list" id="breakdown-list"></div>
-              </section>
-
-              <section class="panel">
-                <div class="panel-heading"><h3 id="result-leaderboard-title">Top 5 auf diesem PC</h3><span id="result-leaderboard-status">LOCAL</span></div>
-                <ol class="leaderboard-list compact-list" id="result-leaderboard"></ol>
-              </section>
-            </div>
-          </div>
+        <section class="coming-strip" aria-label="Ausblick">
+          <span class="strip-icon" aria-hidden="true">+</span>
+          <div><p class="eyebrow">ARCADE EXPANSION</p><h2>Die nächste Challenge lädt bereits …</h2></div>
+          <p>Nach der Messe wächst die Arcade weiter. Neue Kategorien, Teammodi und gemeinsame Highscores sind schon eingeplant.</p>
         </section>
       </main>
 
-      <footer class="app-footer">
-        <span>Mediengestaltung Digital &amp; Print</span>
-        <span>Marken und Farben gehören ihren jeweiligen Inhabern · Schulisches Quiz</span>
+      <footer class="hub-footer">
+        <p>CTRL + CREATE ARCADE <span>·</span> Mediengestaltung Digital &amp; Print</p>
+        <button class="signal-button" id="secret-input-open" type="button" aria-label="Verstecktes Arcade-Eingabefeld öffnen">
+          <span aria-hidden="true">▲ ▲ ▼ ▼</span> SIGNAL LOST?
+        </button>
       </footer>
     </div>
 
-    <dialog class="leaderboard-dialog" id="leaderboard-dialog">
-      <div class="dialog-head">
-        <div><span class="eyebrow" id="leaderboard-source">Dieser PC</span><h2>Bestenliste</h2></div>
-        <button class="icon-button" id="close-leaderboard" type="button" aria-label="Bestenliste schließen">×</button>
-      </div>
-      <ol class="leaderboard-list" id="leaderboard-list"></ol>
-      <div class="dialog-actions">
-        <button class="text-button danger" id="clear-leaderboard" type="button">Bestenliste löschen</button>
-        <a class="text-button" href="./dashboard.html">Globales Dashboard</a>
-        <button class="secondary-button" id="close-leaderboard-bottom" type="button">Schließen</button>
-      </div>
-    </dialog>
+    <div class="toast" id="hub-toast" role="status" aria-live="polite" hidden>
+      <span aria-hidden="true">▣</span><p>Dieses Spiel wird nach der Messe freigeschaltet.</p>
+    </div>
 
-    <div class="sr-only" id="live-region" aria-live="polite"></div>
+    <div class="unlock-screen" id="unlock-screen" aria-live="assertive" hidden>
+      <div class="unlock-burst" aria-hidden="true"></div>
+      <p>SECRET UNLOCKED</p>
+      <strong>COLOR CATCH</strong>
+      <span>The Forbidden Print Run</span>
+    </div>
+
+    <dialog class="secret-dialog" id="secret-dialog" aria-labelledby="secret-dialog-title">
+      <div class="secret-dialog-head">
+        <div><p class="eyebrow">HIDDEN INPUT</p><h2 id="secret-dialog-title">Arcade-Signal</h2></div>
+        <button class="dialog-close" id="secret-input-close" type="button" aria-label="Eingabefeld schließen">×</button>
+      </div>
+      <p>Manche Klassiker reagieren auf die richtige Tastenfolge.</p>
+      <div class="secret-pad" aria-label="Touch-Eingabe für ein geheimes Tastensignal">
+        <button type="button" data-secret-key="ArrowUp" aria-label="Pfeil hoch">↑</button>
+        <button type="button" data-secret-key="ArrowLeft" aria-label="Pfeil links">←</button>
+        <button type="button" data-secret-key="ArrowDown" aria-label="Pfeil runter">↓</button>
+        <button type="button" data-secret-key="ArrowRight" aria-label="Pfeil rechts">→</button>
+        <button type="button" data-secret-key="b" aria-label="Taste B">B</button>
+        <button type="button" data-secret-key="a" aria-label="Taste A">A</button>
+      </div>
+      <div class="signal-progress" aria-hidden="true"><span id="signal-progress-bar"></span></div>
+    </dialog>
   </body>
 </html>
