@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#071d19" />
+  <title>Geo Sprint · CTRL + CREATE ARCADE</title>
+  <link rel="stylesheet" href="../../css/shared.css" />
+  <link rel="stylesheet" href="../../css/components.css" />
+  <link rel="stylesheet" href="../../css/game.css" />
+  <link rel="stylesheet" href="./geo-sprint.css" />
+  <script src="../../js/config.js" defer></script>
+  <script src="../../js/storage.js" defer></script>
+  <script src="../../js/audio.js" defer></script>
+  <script src="../../js/shared.js" defer></script>
+  <script src="./data/countries.js" defer></script>
+  <script src="./geo-sprint.js" defer></script>
+</head>
+<body class="game-page geo-page">
+  <div class="admin-banner" data-admin-banner hidden><span>ADMIN PREVIEW</span><button data-admin-logout type="button">Vorschau beenden</button></div>
+  <div class="game-shell">
+    <header class="arcade-topbar"><a class="arcade-wordmark" href="../../"><i>C&gt;</i><span>CTRL + CREATE ARCADE</span></a><div class="top-actions"><button class="round-icon" data-sound-toggle type="button">♪</button><a class="back-to-hub" href="../../"><span>←</span><span>Alle Spiele</span></a></div></header>
+    <main>
+      <section class="game-hero"><div><p class="eyebrow">80 COUNTRIES. SIX MODES.</p><h1>GEO<br/><span>SPRINT</span></h1></div><p>Flaggen, Hauptstädte, Umrisse und Nachbarn: zehn schnelle Runden rund um den Globus.</p></section>
+      <section class="game-panel">
+        <div class="hud-row"><div><span>Runde</span><strong id="round">0 / 10</strong></div><div><span>Punkte</span><strong id="score">0</strong></div><div><span>Bestwert</span><strong id="best">0</strong></div><div><span>Länder</span><strong>80</strong></div></div>
+        <div class="game-panel-inner">
+          <section class="game-screen" id="start-screen">
+            <p class="question-kicker">CHOOSE YOUR ROUTE</p><h2>Womit reist du?</h2><p>Jede Partie besteht aus zehn Ländern ohne Wiederholung.</p>
+            <div class="mode-list" id="mode-list">
+              <button class="mode-card" data-mode="flag" type="button"><strong>🏳 Flaggen</strong><small>Erkenne das Land am Emoji – mit Text-Fallback.</small></button>
+              <button class="mode-card" data-mode="capital" type="button"><strong>⌖ Hauptstädte</strong><small>Ordne Land und Hauptstadt richtig zu.</small></button>
+              <button class="mode-card" data-mode="outline" type="button"><strong>◇ Umrisse</strong><small>Lokale Natural-Earth-Vektoren, keine Karten-API.</small></button>
+              <button class="mode-card" data-mode="continent" type="button"><strong>◎ Kontinente</strong><small>Europa, Afrika, Asien, Amerika oder Ozeanien?</small></button>
+              <button class="mode-card" data-mode="distance" type="button"><strong>↔ Distanzen</strong><small>Schätze Luftlinien zwischen zwei Hauptstädten.</small></button>
+              <button class="mode-card" data-mode="neighbors" type="button"><strong>⌁ Nachbarn</strong><small>Welches Land grenzt an diese Staaten?</small></button>
+            </div>
+          </section>
+          <section class="game-screen" id="play-screen" hidden>
+            <p class="question-kicker" id="mode-label"></p><h2 class="question-title" id="question"></h2><p class="question-detail" id="detail"></p>
+            <div class="geo-visual" id="visual" hidden></div>
+            <div class="option-grid" id="options"></div>
+            <form class="distance-form" id="distance-form" hidden><label>Deine Schätzung in Kilometern<input id="distance-input" type="number" min="0" max="25000" step="50" inputmode="numeric" required /></label><button class="button button-primary" type="submit">Schätzung prüfen</button></form>
+            <div class="feedback-box" id="feedback" hidden><strong id="feedback-title"></strong><p id="feedback-copy"></p><button class="button secondary-action" id="next-question" type="button">Nächste Route →</button></div>
+          </section>
+          <section class="game-screen" id="result-screen" hidden><p class="question-kicker">TOUCHDOWN</p><h2 id="result-title">Weltreise beendet</h2><div class="result-score" id="result-score">0</div><p>Punkte in zehn Runden</p><p class="local-best" id="result-best"></p><div class="game-actions"><button class="button button-primary" id="restart-game" type="button">Noch eine Route</button><a class="button secondary-action" href="../../">Zurück zur Arcade</a></div></section>
+        </div>
+      </section>
+    </main>
+    <footer class="arcade-footer" data-arcade-footer></footer>
+  </div>
+  <div class="sr-only" id="live" aria-live="polite"></div>
+</body>
+</html>

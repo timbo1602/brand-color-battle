@@ -1,25 +1,7 @@
-<!doctype html>
-<html lang="de">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#080a12" />
-    <meta name="robots" content="noindex" />
-    <title>The Big Pub Quiz · In Vorbereitung</title>
-    <link rel="stylesheet" href="../../css/shared.css" />
-    <link rel="stylesheet" href="./pub-quiz.css" />
-    <script src="./data/questions.js" defer></script>
-    <script src="./pub-quiz.js" defer></script>
-  </head>
-  <body>
-    <main class="placeholder-shell">
-      <p class="eyebrow">LOADING NEXT CHALLENGE</p>
-      <div class="question-mark" aria-hidden="true">?</div>
-      <h1>The Big<br /><span>Pub Quiz</span></h1>
-      <p>Die Spielstruktur steht bereit. Kategorien, Fragenpakete, Zeitbonus sowie Solo- und Teammodus folgen nach der Messe.</p>
-      <div class="planned-categories" id="planned-categories" aria-label="Geplante Kategorien"></div>
-      <p class="question-count" id="question-count">Noch keine Fragen veröffentlicht.</p>
-      <a class="button button-primary" href="../../"><span aria-hidden="true">←</span> Zurück zur Arcade</a>
-    </main>
-  </body>
-</html>
+<!doctype html><html lang="de"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#132018"/><title>The Big Pub Quiz · CTRL + CREATE ARCADE</title><link rel="stylesheet" href="../../css/shared.css"/><link rel="stylesheet" href="../../css/components.css"/><link rel="stylesheet" href="../../css/game.css"/><link rel="stylesheet" href="./pub-quiz.css"/><script src="../../js/config.js" defer></script><script src="../../js/storage.js" defer></script><script src="../../js/audio.js" defer></script><script src="../../js/shared.js" defer></script><script src="./data/questions.js" defer></script><script src="./pub-quiz.js" defer></script></head>
+<body class="game-page pub-page"><div class="admin-banner" data-admin-banner hidden><span>ADMIN PREVIEW</span><button type="button" data-admin-logout>Vorschau beenden</button></div><div class="game-shell"><header class="arcade-topbar"><a class="arcade-wordmark" href="../../"><i>C&gt;</i><span>CTRL + CREATE ARCADE</span></a><div class="top-actions"><button class="round-icon" data-sound-toggle type="button">♪</button><a class="back-to-hub" href="../../"><span>←</span><span>Alle Spiele</span></a></div></header>
+<main><section class="game-hero"><div><p class="eyebrow">ROUND FOR THE HOUSE</p><h1>THE BIG<br/><span>PUB QUIZ</span></h1></div><p>Zehn Fragen, fünf Kategorien und ein kleiner Bonus für schnelle Antworten. Wissen hilft – gefährliches Halbwissen manchmal auch.</p></section><section class="game-panel"><div class="hud-row"><div><span>Frage</span><strong id="hud-progress">0 / 10</strong></div><div><span>Punkte</span><strong id="hud-score">0</strong></div><div><span>Zeit</span><strong id="hud-time">20.0</strong></div><div><span>Bestwert</span><strong id="hud-best">0</strong></div></div><div class="progress-line"><span id="progress-bar"></span></div><div class="game-panel-inner">
+<section class="game-screen" id="start-screen"><p class="question-kicker">WÄHLE DEINE RUNDE</p><h2>Was darf’s sein?</h2><p>Jede Frage wird direkt aufgelöst. Richtige Antworten bringen 100 Punkte plus bis zu 100 Zeitbonus-Punkte.</p><div class="form-grid"><label>Spielmodus<select id="quiz-mode"><option value="mixed">Gemischte Runde · 10 Fragen</option><option value="category">Kategorie wählen · 10 Fragen</option><option value="quick">Schnelle Runde · 5 Fragen</option></select></label><label id="category-field" hidden>Kategorie<select id="quiz-category"></select></label></div><button class="button button-primary" id="start-game" type="button">Quiz starten →</button></section>
+<section class="game-screen" id="question-screen" hidden><p class="question-kicker" id="question-category"></p><h2 class="question-title" id="question-text"></h2><p class="question-detail" id="question-instruction"></p><div class="timer-track"><span id="timer-bar"></span></div><div id="answer-area"></div><div class="game-actions"><button class="button button-primary" id="submit-answer" type="button" disabled>Antwort prüfen</button></div><div class="feedback-box" id="feedback" hidden><strong id="feedback-title"></strong><p id="feedback-text"></p><p class="source-line"><a id="feedback-source" target="_blank" rel="noreferrer">Quelle ansehen</a></p><button class="button secondary-action" id="next-question" type="button">Weiter →</button></div></section>
+<section class="game-screen" id="result-screen" hidden><p class="question-kicker">LAST ORDERS</p><h2 id="result-title">Runde beendet</h2><div class="result-score" id="result-score">0</div><p id="result-copy"></p><p class="local-best" id="result-best"></p><div class="game-actions"><button class="button button-primary" id="restart-game" type="button">Noch einmal spielen</button><a class="button secondary-action" href="../../">Zurück zur Arcade</a></div></section>
+</div></section></main><footer class="arcade-footer" data-arcade-footer>Mediengestaltung Digital &amp; Print</footer></div><div class="sr-only" id="live-region" aria-live="polite"></div></body></html>

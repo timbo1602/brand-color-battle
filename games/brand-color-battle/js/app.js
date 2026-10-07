@@ -41,8 +41,10 @@
     return;
   }
   const maxScore = questions.reduce((sum, question) => sum + question.points, 0);
-  const leaderboardKey = "brand-color-battle-leaderboard-v1";
-  const soundKey = "brand-color-battle-sound-v1";
+  const leaderboardKey = "ctrl-create-arcade:brand-color-battle:leaderboard";
+  const soundKey = "ctrl-create-arcade:settings:sound";
+  const legacyLeaderboardKey = "brand-color-battle-leaderboard-v1";
+  const legacySoundKey = "brand-color-battle-sound-v1";
   const scoreStore = window.BRAND_COLOR_BATTLE_SCORES || createLocalScoreStore();
 
   const state = {
@@ -54,7 +56,7 @@
     playerName: "Gast",
     roundScores: config.rounds.map(() => 0),
     mixerValue: null,
-    soundEnabled: readStorage(soundKey, "on") !== "off"
+    soundEnabled: readStorage(soundKey, readStorage(legacySoundKey, "on")) !== "off"
   };
 
   const screens = [...document.querySelectorAll(".screen")];
@@ -507,7 +509,7 @@
   function createLocalScoreStore() {
     function getLocalEntries() {
       try {
-        const parsed = JSON.parse(readStorage(leaderboardKey, "[]"));
+        const parsed = JSON.parse(readStorage(leaderboardKey, readStorage(legacyLeaderboardKey, "[]")));
         return Array.isArray(parsed)
           ? parsed
               .filter((entry) =>

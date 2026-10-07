@@ -1,6 +1,8 @@
 (() => {
   "use strict";
 
+  if (!window.ArcadeShared?.setupGamePage("colorCatch")) return;
+
   const canvas = document.getElementById("game-canvas");
   const context = canvas.getContext("2d");
   const wrap = document.getElementById("canvas-wrap");
@@ -10,10 +12,12 @@
   const scoreValue = document.getElementById("score-value");
   const timeValue = document.getElementById("time-value");
   const livesValue = document.getElementById("lives-value");
+  const comboValue = document.getElementById("combo-value");
   const highscoreValue = document.getElementById("highscore-value");
   const liveRegion = document.getElementById("game-live");
-  const highscoreKey = "color-catch-highscore-v1";
-  const duration = 40;
+  const highscoreKey = "color-catch:highscore";
+  const legacyHighscoreKey = "color-catch-highscore-v1";
+  const duration = 45;
   const colors = [
     { code: "C", color: "#00e5ff" },
     { code: "M", color: "#ff2e9a" },
@@ -29,6 +33,7 @@
     return {
       mode,
       score: 0,
+      combo: 0,
       lives: 3,
       elapsed: 0,
       timeLeft: duration,
@@ -65,7 +70,7 @@
     resizeCanvas();
     state.lastTime = performance.now();
     frameId = window.requestAnimationFrame(gameLoop);
-    liveRegion.textContent = "Drucklauf gestartet. 40 Sekunden verbleiben.";
+    liveRegion.textContent = "Drucklauf gestartet. 45 Sekunden verbleiben.";
   }
 
   function gameLoop(timestamp) {
@@ -145,11 +150,15 @@
       createParticles(item.x, item.y, item.isError ? "#9aa0ad" : item.color);
       if (item.isError) {
         state.score = Math.max(0, state.score - 15);
+        state.combo = 0;
         state.lives -= 1;
         state.flash = 1;
+        window.ArcadeAudio?.play("wrong");
         liveRegion.textContent = `Print Error. Noch ${state.lives} Leben.`;
       } else {
-        state.score += 10;
+        state.combo += 1;
+        state.score += 10 + Math.min(20, Math.max(0, state.combo - 1) * 2);
+        window.ArcadeAudio?.play("correct");
       }
     });
   }
@@ -179,6 +188,7 @@
       ? "Sauberer Lauf – dieser Rekord bleibt auf dem Gerät gespeichert."
       : "Mehr CMYK, weniger Grau: Die nächste Runde wartet schon.";
     resultOverlay.hidden = false;
+    window.ArcadeAudio?.play(isNewHighscore ? "highscore" : "end");
     document.getElementById("restart-button").focus({ preventScroll: true });
     liveRegion.textContent = `Spiel beendet. ${state.score} Punkte.`;
   }
@@ -188,6 +198,7 @@
     timeValue.textContent = state.timeLeft.toFixed(1).padStart(4, "0");
     livesValue.textContent = [0, 1, 2].map((index) => index < state.lives ? "●" : "○").join(" ");
     livesValue.setAttribute("aria-label", `${state.lives} von 3 Leben`);
+    comboValue.textContent = `×${state.combo}`;
     highscoreValue.textContent = formatScore(highscore);
   }
 
@@ -314,14 +325,17 @@
   }
 
   function readHighscore() {
+    const stored = window.ArcadeStorage?.readNumber(highscoreKey, -1, { min: 0 });
+    if (stored >= 0) return stored;
     try {
-      const value = Number.parseInt(window.localStorage.getItem(highscoreKey) || "0", 10);
-      return Number.isFinite(value) && value >= 0 ? value : 0;
-    } catch { return 0; }
+      const legacy = Number.parseInt(window.localStorage.getItem(legacyHighscoreKey) || "0", 10);
+      if (Number.isFinite(legacy) && legacy >= 0) { window.ArcadeStorage?.writeRaw(highscoreKey, legacy); return legacy; }
+    } catch { /* Ignore blocked legacy storage. */ }
+    return 0;
   }
 
   function writeHighscore(value) {
-    try { window.localStorage.setItem(highscoreKey, String(value)); } catch { /* Storage may be blocked. */ }
+    window.ArcadeStorage?.writeRaw(highscoreKey, value);
   }
 
   function formatScore(value) { return String(Math.max(0, value)).padStart(3, "0"); }

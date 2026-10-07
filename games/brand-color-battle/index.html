@@ -16,12 +16,19 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b12'/%3E%3Ccircle cx='23' cy='25' r='13' fill='%2300d9ff'/%3E%3Ccircle cx='41' cy='25' r='13' fill='%23ff2e9a' fill-opacity='.85'/%3E%3Ccircle cx='32' cy='41' r='13' fill='%23ffe14f' fill-opacity='.85'/%3E%3C/svg%3E"
     />
     <link rel="stylesheet" href="./css/style.css?v=20260917-3" />
+    <link rel="stylesheet" href="../../css/components.css?v=20261007-2" />
+    <script src="../../js/config.js?v=20261007-2" defer></script>
+    <script src="../../js/storage.js?v=20261007-2" defer></script>
+    <script src="../../js/audio.js?v=20261007-2" defer></script>
+    <script src="../../js/shared.js?v=20261007-2" defer></script>
+    <script src="./js/arcade-integration.js?v=20261007-2" defer></script>
     <script src="./js/config.js?v=20260917-2" defer></script>
     <script src="./js/questions.js?v=20260917-2" defer></script>
     <script src="./js/supabase.js?v=20260917-2" defer></script>
     <script src="./js/app.js?v=20260917-2" defer></script>
   </head>
   <body>
+    <div class="admin-banner" data-admin-banner hidden><span>ADMIN PREVIEW</span><button data-admin-logout type="button">Vorschau beenden</button></div>
     <div class="color-rail" aria-hidden="true">
       <span></span><span></span><span></span><span></span>
     </div>
@@ -206,8 +213,8 @@
       </main>
 
       <footer class="app-footer">
-        <span>Mediengestaltung Digital &amp; Print</span>
-        <span>Marken und Farben gehören ihren jeweiligen Inhabern · Schulisches Quiz</span>
+        <span data-fair-only>Mediengestaltung Digital &amp; Print</span>
+        <span data-normal-only>CTRL + CREATE ARCADE · Play. Compete. Repeat.</span>
       </footer>
     </div>
 

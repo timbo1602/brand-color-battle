@@ -1,0 +1,12 @@
+{
+  "name": "CTRL + CREATE ARCADE",
+  "short_name": "CREATE ARCADE",
+  "description": "Quiz-, Party-, Lern- und Arcade-Spiele für Browser und Smartphone.",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080a12",
+  "theme_color": "#080a12",
+  "categories": ["games", "education", "entertainment"]
+}

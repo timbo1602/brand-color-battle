@@ -1,146 +1,137 @@
 # CTRL + CREATE ARCADE
 
-**CTRL + CREATE ARCADE** ist ein browserbasierter Spiele- und Quiz-Hub für die Berufsmesse im Bereich **Mediengestaltung Digital und Print**. Die Plattform verbindet kurze, hochwertige Challenges aus Design, Medien, Gaming und Allgemeinwissen – ohne Framework, Build-Schritt oder externe Bibliotheken.
+**Play. Compete. Repeat.**
 
-Während des Messe-Specials ist **Brand Color Battle** das regulär freigeschaltete Hauptspiel. Weitere Spielkarten geben bereits einen Ausblick auf die spätere Arcade. Ein geheimes, vollständig spielbares Minigame wartet außerdem auf alle, die klassische Arcade-Easter-Eggs kennen.
+CTRL + CREATE ARCADE ist ein statischer, responsiver Browser-Arcade-Hub mit neun regulären Spielen und einem versteckten Minigame. Das Projekt läuft ohne Framework, Bundler oder Laufzeit-Abhängigkeiten auf GitHub Pages. Spielstände und Einstellungen werden lokal im Browser gespeichert.
 
-## Projektlinks
-
-- [CTRL + CREATE ARCADE auf GitHub Pages](https://timbo1602.github.io/brand-color-battle/)
-- [Brand Color Battle direkt öffnen](https://timbo1602.github.io/brand-color-battle/games/brand-color-battle/)
-- [Globales Live-Dashboard](https://timbo1602.github.io/brand-color-battle/games/brand-color-battle/dashboard.html)
-- [GitHub-Repository](https://github.com/timbo1602/brand-color-battle)
+- Live: [timbo1602.github.io/brand-color-battle](https://timbo1602.github.io/brand-color-battle/)
+- Repository: [github.com/timbo1602/brand-color-battle](https://github.com/timbo1602/brand-color-battle)
 
 ## Spiele
 
-### Brand Color Battle · verfügbar
+| Spiel | Inhalt |
+| --- | --- |
+| Brand Color Battle | 12 Aufgaben in vier Runden, Color Lab, lokale und optionale Supabase-Bestenliste |
+| The Big Pub Quiz | 75 Fragen, fünf Kategorien, drei Spielmodi, 20-Sekunden-Timer und Zeitbonus |
+| Higher or Lower | 50 Vergleichswerte aus sieben Kategorien, Endlosserie und lokaler Rekord |
+| Satire oder Schlagzeile? | 45 paraphrasierte Meldungen: echt, Satire oder erfunden; Quellen nach Auflösung |
+| Guess the Year | 60 Ereignisse in sechs Kategorien, Jahres-Slider und Präzisionswertung |
+| Type Rush | 12 Lektionen, 30 Texte, Bildschirmtastatur, WPM/CPM, Genauigkeit und Fehler |
+| JS Quest | 30 JavaScript-Aufgaben in zehn Themen; Nutzercode läuft ausschließlich im kurzlebigen Web Worker |
+| Impostor | Pass-the-Phone für 3–12 Personen, 120 Begriffe, fünf Chaosmodi und eigene Kategorien |
+| Geo Sprint | 80 Länder, lokale Vektorumrisse und sechs Modi für Flaggen, Hauptstädte, Kontinente, Distanzen und Nachbarn |
+| Color Catch | Verstecktes 45-Sekunden-Minispiel mit CMYK-Combos, drei Leben und lokalem Highscore |
 
-Das bestehende Farbenquiz bleibt inhaltlich und technisch erhalten:
+Color Catch erscheint nicht als Karte. Es wird über die klassische Konami-Sequenz auf dem Hub freigeschaltet; für Touchscreens gibt es im Footer ein Signal-Pad. Der Zugriff gilt nur für die aktuelle Browsersitzung.
 
-- vier Runden mit jeweils drei Aufgaben
-- maximal 1.200 Punkte
-- Markenfarben, Farbpaletten, Farbmischung und Produktionswissen
-- lokale Top-10-Bestenliste und optionale gemeinsame Supabase-Bestenliste
-- Offline-Warteschlange für noch nicht übertragene Ergebnisse
-- Auswahl-, Richtig-, Falsch-, Runden- und Abschluss-Sounds
-- Sound-Schalter, Vollbildmodus, Neustart und Ergebnis-Chamäleon
-- separates Live-Dashboard für Messe-Displays
+## Fair Mode und Admin Preview
 
-### The Big Pub Quiz · geplant
+Die zentrale Konfiguration liegt in `js/config.js`:
 
-Das geplante Pub Quiz bekommt Kategorien für Allgemeinwissen, Musik, Film, Internet, Gaming und unnützes Wissen. Die technische Platzhalterstruktur trennt Fragen bereits von der Benutzeroberfläche und ist auf Multiple Choice, Medienfragen, Zeitbonus sowie Solo- und Teammodus vorbereitet. Es werden noch keine erfundenen Fragen ausgeliefert.
-
-### Logo Detective · geplant
-
-Eine weitere spätere Challenge rund um Formen, Markendetails und schrittweise visuelle Hinweise. Die Karte ist im Hub sichtbar, während des Messemodus aber gesperrt.
-
-### Geheimes Minigame
-
-**Color Catch – The Forbidden Print Run** ist nicht als normale Spielkarte sichtbar. Das Easter Egg lässt sich auf der Hub-Seite über eine bekannte klassische Arcade-Tastenfolge öffnen. Auf Touchscreens steht ein unauffälliges Signal-Pad bereit.
-
-Im Spiel werden CMYK-Farben mit einem Druckkopf gesammelt, während graue Print Errors vermieden werden müssen. Eine Runde dauert 40 Sekunden. Geschwindigkeit, Punkte, Leben und lokaler Highscore werden vollständig im Browser verwaltet.
-
-## Messemodus und Freischaltung
-
-Die zentrale Konfiguration liegt in [`js/hub-config.js`](./js/hub-config.js):
-
-```javascript
-window.HUB_CONFIG = {
+```js
+window.ARCADE_CONFIG = Object.freeze({
   fairMode: true,
-  unlockAllGames: false,
-  games: {
-    // ...
-  }
-};
+  adminPreviewEnabled: true,
+  adminCodeHash: "…",
+  games: Object.freeze({
+    brandColorBattle: true,
+    pubQuiz: true
+    // weitere Einzelschalter
+  })
+});
 ```
 
-- `fairMode: true`: Nur dauerhaft freigegebene Spiele wie Brand Color Battle sind sichtbar spielbar.
-- Nach der Messe: `fairMode` auf `false` setzen. Alle Spiele mit `ready: true` werden automatisch freigeschaltet.
-- `unlockAllGames: true`: optionale Vorschau-Freischaltung, ohne den Messemodus dauerhaft zu ändern.
-- Ein noch unfertiges Spiel behält `ready: false` und bleibt dadurch auch außerhalb des Messemodus gesperrt.
-- Das geheime Minigame ist unabhängig vom Messemodus weiterhin über das Easter Egg erreichbar.
+- `fairMode: true`: Öffentlich ist nur Brand Color Battle zugänglich. Andere Karten bleiben sichtbar und gesperrt.
+- `fairMode: false`: Alle Spiele mit aktivem Einzelschalter werden öffentlich freigeschaltet.
+- `games.<id>: false`: Sperrt genau dieses Spiel auch im Normalmodus und in der Admin-Vorschau.
+- Admin Preview: Prüft die Eingabe mit Web Crypto gegen einen SHA-256-Hash. Der Klartextcode steht nicht im Repository. Nach fünf Fehlversuchen greift eine 30-Sekunden-Sperre.
+- Admin- und Secret-Freischaltungen liegen in `sessionStorage`; nach Ende der Browsersitzung sind sie weg.
+- Direkte Spiel-URLs werden mit derselben zentralen Regel geprüft und bei Sperre zum Hub zurückgeleitet.
 
-Damit nach der Messe tatsächlich nur ein Wert geändert werden muss, werden fertiggestellte Spiele bereits bei ihrer Entwicklung auf `ready: true` gesetzt. Zum öffentlichen Freischalttermin wird anschließend nur `fairMode` umgestellt.
+Die Messeansicht zeigt im Footer „Mediengestaltung Digital & Print“. Im Normalmodus erscheint das neutrale Arcade-Branding.
 
-## Projektstruktur
+## Lokale Entwicklung
 
-```text
-.
-├── index.html                         # Arcade-Hub
-├── css/
-│   ├── hub.css                        # Hub-Layout und Arcade-Design
-│   └── shared.css                     # gemeinsame Grundstile
-├── js/
-│   ├── hub-config.js                  # Messemodus und Spielstatus
-│   └── hub.js                         # Hub, Locks, Sound und Easter Egg
-├── games/
-│   ├── brand-color-battle/
-│   │   ├── index.html                 # bestehendes Hauptquiz
-│   │   ├── dashboard.html             # globale Live-Bestenliste
-│   │   ├── assets/
-│   │   ├── css/
-│   │   └── js/                        # Quizfragen, Logik und Supabase
-│   ├── color-catch/
-│   │   ├── index.html                 # geheimes Minigame
-│   │   ├── game.css
-│   │   └── game.js
-│   └── pub-quiz/
-│       ├── index.html                 # technische Platzhalterseite
-│       ├── pub-quiz.css
-│       ├── pub-quiz.js
-│       └── data/questions.js          # erweiterbare Fragedaten
-├── .github/workflows/deploy-pages.yml
-├── .nojekyll
-└── supabase-schema.sql
-```
-
-Alle internen Ressourcen und Links verwenden relative Pfade. Dadurch funktionieren Hub und Spiele sowohl unter dem GitHub-Pages-Unterpfad `/brand-color-battle/` als auch lokal.
-
-## Lokal starten
-
-Die statischen Seiten können direkt im Browser geöffnet werden. Für realistischere Pfad-, Storage- und Navigationstests empfiehlt sich ein lokaler Webserver im Repository-Stamm:
+Ein einfacher HTTP-Server genügt:
 
 ```bash
 python3 -m http.server 4173
 ```
 
-Danach sind die wichtigsten Seiten erreichbar unter:
+Danach den Hub unter `http://127.0.0.1:4173/` öffnen. Ein HTTP-Server ist gegenüber `file://` zu bevorzugen, weil Service Worker, Worker und lokale GeoJSON-Abfragen einen sicheren Web-Kontext beziehungsweise HTTP-Pfade erwarten.
 
-- Hub: `http://127.0.0.1:4173/`
-- Brand Color Battle: `http://127.0.0.1:4173/games/brand-color-battle/`
-- Color Catch: `http://127.0.0.1:4173/games/color-catch/`
+Für die automatisierten Prüfungen:
 
-Für den Kernbetrieb werden keine Netzwerkressourcen geladen. Hub, Quiz und Secret Game bleiben deshalb auch ohne Internetverbindung bedienbar. Nur das globale Dashboard und die gemeinsame Bestenliste benötigen Supabase.
+```bash
+npm test
+```
 
-## Bestenlisten und Datenschutz
+## Projektstruktur
 
-Brand Color Battle speichert eine lokale Top 10 im jeweiligen Browser. Bei aktiver Supabase-Verbindung werden Spitzname, Punktzahl, Zeitpunkt und eine zufällige Übertragungs-ID an die gemeinsame Bestenliste gesendet. Backend-Fehler blockieren das Quiz nicht; Ergebnisse werden lokal vorgemerkt.
+```text
+.
+├── index.html                  # Arcade-Hub
+├── css/                        # gemeinsame Komponenten, Hub und Spielbasis
+├── js/                         # Konfiguration, Storage, Sound, Guards, Admin und Hub
+├── games/
+│   ├── brand-color-battle/
+│   ├── pub-quiz/
+│   ├── higher-lower/
+│   ├── satire-or-headline/
+│   ├── guess-the-year/
+│   ├── type-rush/
+│   ├── js-quest/
+│   ├── impostor/
+│   ├── geo-sprint/
+│   └── color-catch/
+├── scripts/generate-geo-data.mjs
+├── sw.js                       # Offline-Cache
+└── manifest.webmanifest
+```
 
-Color Catch verwendet vorerst ausschließlich einen lokalen Highscore. Eine spätere gemeinsame Bestenliste kann ergänzt werden, ohne den Spielablauf an ein Backend zu koppeln.
+Jedes Spiel besitzt eine eigene HTML-, CSS- und JavaScript-Datei; größere Datensätze liegen separat unter `games/<spiel>/data/`. Gemeinsame Funktionen sind bewusst klein gehalten und unter `js/` zentralisiert.
 
-## Supabase-Konfiguration
+## Datenquellen und Lizenzen
 
-1. Ein Supabase-Projekt anlegen und `supabase-schema.sql` im SQL Editor ausführen.
-2. In `games/brand-color-battle/js/config.js` die Project URL und den öffentlichen Publishable Key eintragen.
-3. Die Änderung auf `main` pushen; GitHub Pages veröffentlicht sie automatisch.
+- Länderstammdaten: das offene [mledoze/countries-Dataset](https://github.com/mledoze/countries), lokal in ein reduziertes 80-Länder-Format überführt.
+- Länderumrisse: [Natural Earth](https://www.naturalearthdata.com/), Datensatz *Admin 0 – Countries*. Natural-Earth-Daten sind Public Domain.
+- Der Browser lädt zur Laufzeit keine Länder- oder Karten-API. `countries.js` und `outlines.geojson` liegen im Repository.
+- Reale und satirische Meldungen werden im Spiel paraphrasiert; die jeweilige Quelle wird erst nach der Antwort als Link angezeigt. Erfundenes Material ist als Eigenproduktion gekennzeichnet.
 
-Im Frontend darf ausschließlich ein öffentlicher Publishable- beziehungsweise Anon-Key verwendet werden. Ein Secret- oder `service_role`-Schlüssel gehört niemals in diese Dateien.
+Geo-Daten lassen sich aus lokal heruntergeladenen Quelldateien reproduzieren:
 
-## Barrierefreiheit und Eingabe
+```bash
+node scripts/generate-geo-data.mjs /pfad/countries.json /pfad/natural-earth.geojson
+```
 
-- semantische Überschriften, Statusmeldungen und ARIA-Beschriftungen
-- gut sichtbare Tastatur-Fokusrahmen
-- Hub und Quiz vollständig mit Tastatur bedienbar
-- Color Catch mit Pfeiltasten, `A`/`D`, großen Touch-Schaltflächen oder Ziehen im Spielfeld
+## Speicherung, Datenschutz und Sicherheit
+
+- Alle Arcade-Schlüssel verwenden den Präfix `ctrl-create-arcade:`.
+- Highscores, Lernfortschritt, eigene Impostor-Kategorien und die Sound-Einstellung liegen in `localStorage`.
+- Admin Preview und Secret Unlock liegen ausschließlich in `sessionStorage`.
+- Defekte oder manipulierte Storage-Werte werden validiert und auf sichere Standardwerte zurückgesetzt.
+- JS Quest führt eingegebenen Code nie im Hauptfenster aus. Ein isolierter Blob-Worker wird nach spätestens 750 ms beendet; Netzwerk-APIs und `importScripts` werden im Worker deaktiviert.
+- Es gibt keine Werbung, Analyse-Skripte oder Tracking-Pixel.
+- Brand Color Battle kann optional ein vorhandenes Supabase-Backend für eine gemeinsame Bestenliste verwenden. Dabei werden nur Spitzname, Punktzahl, Zeitpunkt und eine zufällige Übertragungs-ID verarbeitet.
+- Niemals geheime Supabase-Schlüssel im Frontend hinterlegen; dort ist ausschließlich ein öffentlicher Publishable-/Anon-Key zulässig.
+
+## Offline-Betrieb
+
+`sw.js` speichert Hub, Spiele, Daten, Styles, Skripte und Bildassets nach dem ersten erfolgreichen Online-Aufruf. Anschließend sind Hub und Spiele ohne Netz nutzbar. Externe Quellenlinks und die optionale globale Supabase-Bestenliste benötigen weiterhin eine Verbindung.
+
+## Bedienung und Barrierefreiheit
+
+- Tastaturbedienung und sichtbare Fokusmarkierungen
+- ARIA-Statusmeldungen und semantische Struktur
+- große Touch-Ziele und responsive Layouts
+- Pause beziehungsweise Zeitstopp bei ausgeblendeten zeitkritischen Spielen
+- globale Sound-Einstellung; Audio ist immer optional
 - reduzierte Animationen über `prefers-reduced-motion`
-- responsive Darstellung für Messe-PCs, Tablets und Smartphones
 
-## Veröffentlichung
+## Deployment
 
-Jeder Push auf `main` startet `.github/workflows/deploy-pages.yml`. Der Workflow kann zusätzlich über `workflow_dispatch` manuell gestartet werden und veröffentlicht den gesamten statischen Repository-Inhalt auf GitHub Pages.
+Jeder Push auf `main` startet `.github/workflows/deploy-pages.yml` und veröffentlicht das statische Repository über GitHub Pages. Der Workflow lässt sich zusätzlich manuell starten. In einem Fork muss unter **Settings → Pages → Source** gegebenenfalls einmalig **GitHub Actions** gewählt werden.
 
-Falls Pages in einer neuen Kopie noch nicht aktiviert ist, muss unter **Repository → Settings → Pages → Source** einmalig **GitHub Actions** ausgewählt werden.
+## Markenhinweis
 
-## Hinweis zu Marken
-
-Das Projekt entstand für einen schulischen Messe-Einsatz. Genannte Marken, Namen und Farben gehören ihren jeweiligen Rechteinhabern und werden ausschließlich im Rahmen des Quiz verwendet.
+Genannte Marken, Namen und Farben gehören ihren jeweiligen Rechteinhabern und werden ausschließlich zu Lern- und Quizzwecken verwendet.

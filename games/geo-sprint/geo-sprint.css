@@ -1,0 +1,9 @@
+.geo-page{--game-accent:#45f0b2}.geo-page .game-hero h1 span{color:var(--game-accent)}
+.geo-visual{display:grid;place-items:center;min-height:250px;margin:24px 0;border:1px solid var(--line);border-radius:14px;background:radial-gradient(circle,#16352d,#0b1119 70%);overflow:hidden}
+.geo-visual[hidden],.distance-form[hidden]{display:none}
+.geo-visual .flag{font-size:clamp(5rem,18vw,10rem);line-height:1;filter:drop-shadow(0 12px 22px #0008)}
+.geo-visual .flag-fallback{margin-top:14px;color:var(--muted);font:800 .75rem/1 ui-monospace,monospace;letter-spacing:.12em}
+.geo-visual svg{width:min(100%,560px);height:270px;padding:22px;overflow:visible}.geo-visual path{fill:#45f0b233;stroke:var(--game-accent);stroke-width:2;vector-effect:non-scaling-stroke}
+.geo-visual .route{display:flex;align-items:center;gap:22px;font-size:clamp(1rem,4vw,1.6rem);font-weight:900;text-align:center}.geo-visual .route i{color:var(--game-accent);font-style:normal}.geo-visual .neighbors{padding:24px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}.geo-visual .neighbors span{padding:9px 12px;border:1px solid #45f0b255;border-radius:999px;background:#45f0b212;font-weight:800}
+.distance-form{display:flex;align-items:end;gap:12px;margin-top:22px}.distance-form label{flex:1}.distance-form input{width:100%;margin-top:8px;padding:14px;border:1px solid var(--line);border-radius:8px;background:#101621;color:var(--ink);font:800 1.1rem/1 ui-monospace,monospace}
+@media(max-width:640px){.geo-visual{min-height:210px}.geo-visual svg{height:220px}.distance-form{align-items:stretch;flex-direction:column}}

@@ -5,8 +5,10 @@
   const supabaseUrl = String(settings.SUPABASE_URL || "").replace(/\/+$/, "");
   const publishableKey = String(settings.SUPABASE_PUBLISHABLE_KEY || settings.SUPABASE_ANON_KEY || "").trim();
   const enabled = /^https:\/\//i.test(supabaseUrl) && publishableKey.length > 20;
-  const leaderboardKey = "brand-color-battle-leaderboard-v1";
-  const pendingKey = "brand-color-battle-pending-scores-v1";
+  const leaderboardKey = "ctrl-create-arcade:brand-color-battle:leaderboard";
+  const pendingKey = "ctrl-create-arcade:brand-color-battle:pending-scores";
+  const legacyLeaderboardKey = "brand-color-battle-leaderboard-v1";
+  const legacyPendingKey = "brand-color-battle-pending-scores-v1";
   const refreshInterval = 30_000;
   const requestTimeout = 7_000;
 
@@ -87,7 +89,7 @@
   }
 
   function getLocalEntries() {
-    const entries = readJson(leaderboardKey);
+    const entries = readJson(leaderboardKey, legacyLeaderboardKey);
     return Array.isArray(entries)
       ? entries.map(normalizeLocalEntry).filter(Boolean).sort(compareEntries).slice(0, 10)
       : [];
@@ -202,7 +204,7 @@
   }
 
   function getPending() {
-    const entries = readJson(pendingKey);
+    const entries = readJson(pendingKey, legacyPendingKey);
     if (!Array.isArray(entries)) return [];
     return entries.filter((entry) =>
       entry &&
@@ -214,9 +216,9 @@
     );
   }
 
-  function readJson(key) {
+  function readJson(key, legacyKey = "") {
     try {
-      return JSON.parse(window.localStorage.getItem(key) || "[]");
+      return JSON.parse(window.localStorage.getItem(key) || (legacyKey && window.localStorage.getItem(legacyKey)) || "[]");
     } catch {
       return [];
     }

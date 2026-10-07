@@ -11,10 +11,17 @@
     <title>Globales Dashboard · Brand Color Battle</title>
     <link rel="stylesheet" href="./css/style.css?v=20260917-3" />
     <link rel="stylesheet" href="./css/dashboard.css?v=20260917-2" />
+    <link rel="stylesheet" href="../../css/components.css?v=20261007-2" />
+    <script src="../../js/config.js?v=20261007-2" defer></script>
+    <script src="../../js/storage.js?v=20261007-2" defer></script>
+    <script src="../../js/audio.js?v=20261007-2" defer></script>
+    <script src="../../js/shared.js?v=20261007-2" defer></script>
+    <script src="./js/arcade-integration.js?v=20261007-2" defer></script>
     <script src="./js/config.js?v=20260917-2" defer></script>
     <script src="./js/dashboard.js?v=20260917-2" defer></script>
   </head>
   <body class="dashboard-page">
+    <div class="admin-banner" data-admin-banner hidden><span>ADMIN PREVIEW</span><button data-admin-logout type="button">Vorschau beenden</button></div>
     <div class="color-rail" aria-hidden="true">
       <span></span><span></span><span></span><span></span>
     </div>
@@ -113,8 +120,8 @@
       </main>
 
       <footer class="app-footer dashboard-footer">
-        <span>Mediengestaltung Digital &amp; Print</span>
-        <span>Automatische Aktualisierung alle 30 Sekunden</span>
+        <span data-fair-only>Mediengestaltung Digital &amp; Print</span>
+        <span data-normal-only>CTRL + CREATE ARCADE · Play. Compete. Repeat.</span>
       </footer>
     </div>
   </body>

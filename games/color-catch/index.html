@@ -8,11 +8,17 @@
     <meta name="description" content="Color Catch – The Forbidden Print Run. Ein geheimes Minigame der CTRL + CREATE ARCADE." />
     <title>Color Catch · CTRL + CREATE ARCADE</title>
     <link rel="stylesheet" href="../../css/shared.css?v=20261007-1" />
+    <link rel="stylesheet" href="../../css/components.css?v=20261007-2" />
     <link rel="stylesheet" href="./game.css?v=20261007-1" />
-    <script src="./game.js?v=20261007-1" defer></script>
+    <script src="../../js/config.js?v=20261007-2" defer></script>
+    <script src="../../js/storage.js?v=20261007-2" defer></script>
+    <script src="../../js/audio.js?v=20261007-2" defer></script>
+    <script src="../../js/shared.js?v=20261007-2" defer></script>
+    <script src="./game.js?v=20261007-2" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#game">Direkt zum Spiel</a>
+    <div class="admin-banner" data-admin-banner hidden><span>ADMIN PREVIEW</span><button data-admin-logout type="button">Vorschau beenden</button></div>
     <div class="print-grid" aria-hidden="true"></div>
 
     <div class="catch-shell">
@@ -21,7 +27,7 @@
           <span aria-hidden="true">C&gt;</span><strong>CTRL + CREATE <i>ARCADE</i></strong>
         </a>
         <span class="secret-badge">SECRET GAME // 001</span>
-        <a class="back-link" href="../../"><span aria-hidden="true">←</span> Zurück zur Arcade</a>
+        <div class="secret-actions"><button class="secret-sound" data-sound-toggle type="button">♪</button><a class="back-link" href="../../"><span aria-hidden="true">←</span> Zurück zur Arcade</a></div>
       </header>
 
       <main class="game-main" id="game">
@@ -38,8 +44,9 @@
 
           <div class="hud" aria-label="Spielstand">
             <div><span>SCORE</span><strong id="score-value">000</strong></div>
-            <div><span>ZEIT</span><strong id="time-value">40.0</strong></div>
+            <div><span>ZEIT</span><strong id="time-value">45.0</strong></div>
             <div><span>FEHLER</span><strong id="lives-value" aria-label="Drei Leben">● ● ●</strong></div>
+            <div><span>COMBO</span><strong id="combo-value">×0</strong></div>
             <div><span>HIGHSCORE</span><strong id="highscore-value">000</strong></div>
           </div>
 
@@ -49,7 +56,7 @@
               <div class="cmyk-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
               <p class="eyebrow">PRINT QUEUE READY</p>
               <h2>Die verbotene<br />Druckrunde startet.</h2>
-              <p>CMYK einsammeln, graue Fehlfarben vermeiden. Du hast 40 Sekunden und drei Leben.</p>
+              <p>CMYK einsammeln, Combos bauen, graue Fehlfarben vermeiden. Du hast 45 Sekunden und drei Leben.</p>
               <button class="button button-primary" id="start-button" type="button">Drucklauf starten <span aria-hidden="true">→</span></button>
               <small>Steuerung: ← → oder A D</small>
             </div>
@@ -76,13 +83,13 @@
         </section>
 
         <section class="legend" aria-label="Spielregeln">
-          <div class="legend-colors"><span class="cyan"></span><span class="magenta"></span><span class="yellow"></span><span class="black"></span><p><strong>CMYK</strong> +10 Punkte</p></div>
+          <div class="legend-colors"><span class="cyan"></span><span class="magenta"></span><span class="yellow"></span><span class="black"></span><p><strong>CMYK</strong> +10 Punkte &amp; Combo-Bonus</p></div>
           <div class="legend-error"><span></span><p><strong>PRINT ERROR</strong> −15 Punkte &amp; 1 Leben</p></div>
           <p class="legend-speed"><strong>SPEED</strong> steigt während der Runde</p>
         </section>
       </main>
 
-      <footer class="game-footer"><span>LOCAL HIGHSCORE // Dieses Gerät</span><span>NO CONTINUES. JUST REPRINT.</span></footer>
+      <footer class="game-footer"><span>LOCAL HIGHSCORE // Dieses Gerät</span><span data-arcade-footer></span></footer>
     </div>
     <div class="sr-live" id="game-live" aria-live="polite"></div>
   </body>

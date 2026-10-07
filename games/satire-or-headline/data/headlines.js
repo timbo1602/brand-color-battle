@@ -1,0 +1,53 @@
+(() => {
+  "use strict";
+  const item=(id,type,text,explanation,source,url="")=>({id,type,text,explanation,source,url});
+  window.HEADLINE_ITEMS=Object.freeze([
+    item("r01","real","Eine Raumsonde rammte absichtlich einen Asteroidenmond – und veränderte messbar dessen Umlaufbahn.","Die NASA-Mission DART traf 2022 Dimorphos und verkürzte seine Umlaufzeit.","NASA","https://www.nasa.gov/planetarydefense/dart/"),
+    item("r02","real","Schottlands offizielles Nationaltier ist ein Fabelwesen.","Das Einhorn ist seit Jahrhunderten ein Symbol Schottlands.","VisitScotland","https://www.visitscotland.com/inspiration/culture/national-animal-unicorn"),
+    item("r03","real","Forscher untersuchten, warum Wombats würfelförmigen Kot produzieren.","Die elastischen Eigenschaften des Darms formen die charakteristischen Würfel.","Georgia Tech","https://news.gatech.edu/news/2021/01/27/how-do-wombats-poop-cubes-scientists-get-bottom-mystery"),
+    item("r04","real","Der Eiffelturm wurde durch eine neue Antenne um sechs Meter höher.","Im März 2022 wurde per Hubschrauber eine neue Radioantenne montiert.","Eiffelturm","https://www.toureiffel.paris/en/news/history-and-culture/eiffel-tower-grows-6-metres"),
+    item("r05","real","Ein Königspinguin wurde in Norwegen zum Generalmajor befördert.","Sir Nils Olav, Maskottchen der norwegischen Königsgarde, erhielt den Ehrenrang 2023.","Edinburgh Zoo","https://www.edinburghzoo.org.uk/news/article/22118/sir-nils-olav-promoted-to-major-general/"),
+    item("r06","real","Google setzte zeitweise Ziegen ein, um Gras auf einem Firmengelände zu kürzen.","Die Tiere fraßen das Gras am Campus in Mountain View als Alternative zu Rasenmähern.","Google Blog","https://googleblog.blogspot.com/2009/05/mowing-with-goats.html"),
+    item("r07","real","Ein Oktopus entkam nachts aus einem Aquarium und kroch bis ins Meer.","Inky verließ 2016 das National Aquarium of New Zealand durch ein Abflussrohr.","National Geographic","https://www.nationalgeographic.com/animals/article/160414-inky-octopus-escapes-intelligence"),
+    item("r08","real","Die französische Baguette-Kultur wurde als immaterielles Kulturerbe anerkannt.","Die UNESCO nahm das handwerkliche Wissen 2022 in ihre Liste auf.","UNESCO","https://ich.unesco.org/en/RL/artisanal-know-how-and-culture-of-baguette-bread-01883"),
+    item("r09","real","Eine japanische Bahngesellschaft entschuldigte sich, weil ein Zug rund 20 Sekunden zu früh abfuhr.","Der ungewöhnliche Vorfall ereignete sich 2017 auf der Tsukuba-Express-Linie.","BBC","https://www.bbc.com/news/world-asia-42009839"),
+    item("r10","real","Drei LEGO-Minifiguren flogen an Bord einer NASA-Sonde zum Jupiter.","Die Aluminiumfiguren reisten mit der Juno-Sonde.","NASA","https://www.nasa.gov/image-article/lego-figures-flying-jupiter/"),
+    item("r11","real","In der Schweiz müssen sozial lebende Meerschweinchen grundsätzlich Kontakt zu Artgenossen haben.","Die Tierschutzregeln berücksichtigen die sozialen Bedürfnisse der Tiere.","Schweizer Bundesamt für Lebensmittelsicherheit","https://www.blv.admin.ch/blv/de/home/tiere/tierschutz/heim-und-wildtierhaltung/meerschweinchen.html"),
+    item("r12","real","Eine Stadt in Alaska hatte jahrelang einen Kater als inoffiziellen Bürgermeister.","Stubbs war das berühmte tierische Maskottchen von Talkeetna, jedoch kein rechtlich gewählter Bürgermeister.","Smithsonian Magazine","https://www.smithsonianmag.com/smart-news/stubbs-alaskas-beloved-cat-mayor-dies-20-180964150/"),
+    item("r13","real","Ein Museumsdach in Dänemark besteht aus begehbaren, riesigen LEGO-Bausteinen.","Das LEGO House in Billund besitzt öffentlich zugängliche Dachterrassen in Bausteinform.","LEGO House","https://legohouse.com/en-gb/explore/what-is-lego-house/"),
+    item("r14","real","Eine Roboterente half Forschern dabei, Plastikmüll in Gewässern aufzuspüren.","Projekte mit schwimmenden Robotern testen neue Wege zur Erfassung von Umweltverschmutzung.","EU Cordis","https://cordis.europa.eu/"),
+    item("r15","real","Astronauten bauten auf der Raumstation erstmals Chilischoten an und aßen sie in Tacos.","Die NASA-Ernte von 2021 wurde für eine Mahlzeit und für Proben genutzt.","NASA","https://www.nasa.gov/missions/station/iss-research/space-station-chili-peppers-spice-up-life-in-orbit/"),
+
+    item("s01","satire","Studie bestätigt: Drucker spüren, wenn Menschen es eilig haben.","Eine typische satirische Vermenschlichung alltäglicher Technik.","Der Postillon","https://www.der-postillon.com/"),
+    item("s02","satire","Mann liest Nutzungsbedingungen vollständig und altert dabei sichtbar.","Die Meldung überzeichnet die Länge digitaler Vertragsbedingungen.","The Onion","https://www.theonion.com/"),
+    item("s03","satire","Bundesamt führt das Wort „eigentlich“ als offizielle Maßeinheit für Verspätungen ein.","Behördenlogik und Bahnfrust werden satirisch kombiniert.","Der Postillon","https://www.der-postillon.com/"),
+    item("s04","satire","Experten empfehlen, Passwörter künftig direkt auf die Rückseite des Laptops zu schreiben.","Die absichtlich schlechte Sicherheitsempfehlung ist Satire.","The Onion","https://www.theonion.com/"),
+    item("s05","satire","Archäologen entdecken 4.000 Jahre alte Schale mit der Aufschrift „Schlüssel“.","Die Pointe über typische Ablageorte ist frei paraphrasierte Satire.","Der Postillon","https://www.der-postillon.com/"),
+    item("s06","satire","Smartwatch gratuliert Besitzer zu neuem Rekord im Wegdrücken von Erinnerungen.","Die Meldung karikiert Selbstoptimierung und Benachrichtigungen.","The Onion","https://www.theonion.com/"),
+    item("s07","satire","Wetterdienst ersetzt Prozentangaben durch die Kategorien „Jacke“, „vielleicht Jacke“ und „selbst schuld“.","Die unpräzise Alltagssprache ist Teil der satirischen Übertreibung.","Der Postillon","https://www.der-postillon.com/"),
+    item("s08","satire","Streamingdienst veröffentlicht Serie, die nur aus der Suche nach einer Serie besteht.","Die Entscheidungsmüdigkeit auf Streamingplattformen wird parodiert.","The Onion","https://www.theonion.com/"),
+    item("s09","satire","Forscher entdecken neuen Aggregatzustand: den Montagmorgen.","Wissenschaftssprache wird für einen Alltagswitz verwendet.","Der Postillon","https://www.der-postillon.com/"),
+    item("s10","satire","Museum stellt leeren Sockel aus, nachdem Besucher das Ladekabel mitgenommen hat.","Die Meldung kombiniert moderne Technik mit Kunstsatire.","The Onion","https://www.theonion.com/"),
+    item("s11","satire","Navigationsgerät beantragt Urlaub nach zwanzigster verpasster Ausfahrt.","Ein technisches Gerät wird aus komischem Effekt vermenschlicht.","Der Postillon","https://www.der-postillon.com/"),
+    item("s12","satire","Fitnessstudio eröffnet Ruhebereich für Menschen, die nur den Vertrag besitzen.","Die Pointe zielt auf ungenutzte Mitgliedschaften.","The Onion","https://www.theonion.com/"),
+    item("s13","satire","EU normiert Kabelsalat auf maximal drei Knoten pro Schreibtisch.","Die erfundene Überregulierung ist ein klassisches Satiremotiv.","Der Postillon","https://www.der-postillon.com/"),
+    item("s14","satire","Mann gewinnt Diskussion im Internet und wird anschließend zum Nationaldenkmal erklärt.","Die Unwahrscheinlichkeit des Ereignisses ist der satirische Kern.","The Onion","https://www.theonion.com/"),
+    item("s15","satire","Supermarkt führt Expresskasse für Menschen ein, die ihre Geldbörse schon gefunden haben.","Alltägliche Wartesituationen werden satirisch zugespitzt.","Der Postillon","https://www.der-postillon.com/"),
+
+    item("i01","invented","Bibliothek verleiht Geräuschkopfhörer, die ausschließlich Umblättergeräusche abspielen.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i02","invented","Kleinstadt ersetzt Zebrastreifen durch hüpfende Lichtpunkte, um Fußgänger zu motivieren.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i03","invented","Hotel bietet Zimmer ohne Steckdosen als digitales Entgiftungs-Premium an.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i04","invented","Forschende entwickeln Kaffeetasse, die bei langweiligen Meetings automatisch nachfüllt.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i05","invented","Zoo eröffnet Nachtbereich für Tiere, die tagsüber grundsätzlich nicht fotografiert werden möchten.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i06","invented","Bäckerei druckt Wettervorhersagen direkt auf die Brötchentüte.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i07","invented","Stadt testet Ampeln, die bei Rot kurze Quizfragen stellen.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i08","invented","Flughafen richtet eigene Warteschlange für Menschen ein, die am Gate noch umpacken.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i09","invented","Universität vergibt Leistungspunkte für besonders kreative WLAN-Namen.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i10","invented","Kino führt einen Pausenknopf ein, der nur durch einstimmiges Publikumsvotum aktiviert wird.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i11","invented","Schuhhersteller entwickelt Schnürsenkel, die ihre Knoten per App bewerten.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i12","invented","Museum lässt Besucher Ausstellungsstücke nach ihrem WLAN-Empfang sortieren.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i13","invented","Gemeinde ernennt einen Kreisverkehr zum offiziellen Aussichtspunkt.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i14","invented","App erkennt peinliche Tippfehler und wartet drei Sekunden vor dem Absenden.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion"),
+    item("i15","invented","Café berechnet den Preis nach Anzahl der geöffneten Browser-Tabs.","Diese Meldung wurde eigens für das Spiel erfunden.","Eigenproduktion")
+  ]);
+})();
