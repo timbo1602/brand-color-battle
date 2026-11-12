@@ -11,7 +11,7 @@ CTRL + CREATE ARCADE ist ein statischer, responsiver Browser-Arcade-Hub mit neun
 
 | Spiel | Inhalt |
 | --- | --- |
-| Brand Color Battle | 12 Aufgaben in vier Runden, Color Lab, lokale und optionale Supabase-Bestenliste |
+| Brand Color Battle | 12 Aufgaben in vier Runden, Color Lab, lokale und optionale Supabase-Bestenliste sowie QR-Einstieg vom Live-Dashboard |
 | The Big Pub Quiz | 75 Fragen, fünf Kategorien, drei Spielmodi, 20-Sekunden-Timer und Zeitbonus |
 | Higher or Lower | 50 Vergleichswerte aus sieben Kategorien, Endlosserie und lokaler Rekord |
 | Satire oder Schlagzeile? | 45 paraphrasierte Meldungen: echt, Satire oder erfunden; Quellen nach Auflösung |

@@ -101,6 +101,32 @@ test("offline manifest lists only existing local assets", () => {
   }
 });
 
+test("dashboard QR points to the published Brand Color Battle start screen", () => {
+  const dashboard = read("games/brand-color-battle/dashboard.html");
+  const target = "https://timbo1602.github.io/brand-color-battle/games/brand-color-battle/";
+  assert.equal((dashboard.match(new RegExp(target.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 2);
+  assert.match(dashboard, /<img[^>]+src="\.\/assets\/brand-color-battle-qr\.svg"[^>]+alt="QR-Code zum Startbildschirm von Brand Color Battle"/);
+  const qr = read("games/brand-color-battle/assets/brand-color-battle-qr.svg");
+  assert.match(qr, /<svg\b[^>]+viewBox="0 0 \d+ \d+"/);
+  assert.match(qr, /shape-rendering="crispEdges"/);
+});
+
+test("Supabase client and schema keep the public leaderboard permissions narrow", () => {
+  const config = read("games/brand-color-battle/js/config.js");
+  const settings = globals("games/brand-color-battle/js/config.js").BRAND_COLOR_BATTLE_SUPABASE;
+  const client = read("games/brand-color-battle/js/supabase.js");
+  const schema = read("supabase-schema.sql");
+  assert.match(config, /SUPABASE_PUBLISHABLE_KEY:\s*"sb_publishable_/);
+  assert.equal(typeof settings.SUPABASE_SERVICE_ROLE_KEY, "undefined");
+  assert.match(settings.SUPABASE_PUBLISHABLE_KEY, /^sb_publishable_/);
+  assert.match(client, /on_conflict=submission_id/);
+  assert.match(client, /resolution=ignore-duplicates/);
+  assert.match(schema, /enable row level security/i);
+  assert.match(schema, /grant select on table public\.scores to anon/i);
+  assert.match(schema, /grant insert \(nickname, score, submission_id\) on table public\.scores to anon/i);
+  assert.doesNotMatch(schema, /grant (?:update|delete)\b/i);
+});
+
 test("game scripts only call the published shared APIs", () => {
   const files = [];
   const walk = (dir) => fs.readdirSync(dir, { withFileTypes:true }).forEach((entry) => { const full = path.join(dir, entry.name); if (entry.isDirectory()) walk(full); else if (entry.name.endsWith(".js")) files.push(full); });

@@ -1,11 +1,11 @@
-const CACHE = "ctrl-create-arcade-v3";
+const CACHE = "ctrl-create-arcade-v4";
 const ASSETS = [
   "./", "./index.html", "./manifest.webmanifest",
   "./css/shared.css", "./css/components.css", "./css/game.css", "./css/hub.css",
   "./js/config.js", "./js/storage.js", "./js/audio.js", "./js/shared.js", "./js/hub.js", "./js/admin-preview.js",
   "./games/brand-color-battle/", "./games/brand-color-battle/index.html", "./games/brand-color-battle/dashboard.html",
   "./games/brand-color-battle/css/style.css", "./games/brand-color-battle/css/dashboard.css",
-  "./games/brand-color-battle/js/config.js", "./games/brand-color-battle/js/questions.js", "./games/brand-color-battle/js/supabase.js", "./games/brand-color-battle/js/app.js", "./games/brand-color-battle/js/dashboard.js", "./games/brand-color-battle/js/arcade-integration.js", "./games/brand-color-battle/assets/congratulations-chameleon.webp",
+  "./games/brand-color-battle/js/config.js", "./games/brand-color-battle/js/questions.js", "./games/brand-color-battle/js/supabase.js", "./games/brand-color-battle/js/app.js", "./games/brand-color-battle/js/dashboard.js", "./games/brand-color-battle/js/arcade-integration.js", "./games/brand-color-battle/assets/congratulations-chameleon.webp", "./games/brand-color-battle/assets/brand-color-battle-qr.svg",
   "./games/pub-quiz/", "./games/pub-quiz/index.html", "./games/pub-quiz/pub-quiz.css", "./games/pub-quiz/pub-quiz.js", "./games/pub-quiz/data/questions.js",
   "./games/higher-lower/", "./games/higher-lower/index.html", "./games/higher-lower/higher-lower.css", "./games/higher-lower/higher-lower.js", "./games/higher-lower/data/items.js",
   "./games/satire-or-headline/", "./games/satire-or-headline/index.html", "./games/satire-or-headline/satire.css", "./games/satire-or-headline/satire.js", "./games/satire-or-headline/data/headlines.js",

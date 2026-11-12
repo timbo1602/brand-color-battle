@@ -10,7 +10,7 @@
     />
     <title>Globales Dashboard · Brand Color Battle</title>
     <link rel="stylesheet" href="./css/style.css?v=20260917-3" />
-    <link rel="stylesheet" href="./css/dashboard.css?v=20260917-2" />
+    <link rel="stylesheet" href="./css/dashboard.css?v=20261112-1" />
     <link rel="stylesheet" href="../../css/components.css?v=20261007-2" />
     <script src="../../js/config.js?v=20261007-2" defer></script>
     <script src="../../js/storage.js?v=20261007-2" defer></script>
@@ -103,17 +103,34 @@
             </ol>
           </section>
 
-          <section class="dashboard-panel activity-panel" aria-labelledby="activity-title">
-            <div class="dashboard-panel-head">
-              <div>
-                <p class="eyebrow">Zuletzt gespielt</p>
-                <h2 id="activity-title">Neue Ergebnisse</h2>
+          <div class="dashboard-side-stack">
+            <section class="dashboard-panel join-panel" aria-labelledby="join-title">
+              <div class="join-copy">
+                <p class="eyebrow">Am Handy mitspielen</p>
+                <h2 id="join-title">Scannen. Farbe zeigen.</h2>
+                <p>Öffne die Kamera, scanne den Code und starte Brand Color Battle direkt auf deinem Smartphone.</p>
+                <a class="join-link" href="https://timbo1602.github.io/brand-color-battle/games/brand-color-battle/">Quiz am Handy öffnen <span aria-hidden="true">↗</span></a>
               </div>
-            </div>
-            <ol class="activity-list" id="recent-results" aria-live="polite">
-              <li class="dashboard-placeholder">Aktivität wird geladen …</li>
-            </ol>
-          </section>
+              <div class="join-qr">
+                <a href="https://timbo1602.github.io/brand-color-battle/games/brand-color-battle/" aria-label="Brand Color Battle auf dem Smartphone öffnen">
+                  <img src="./assets/brand-color-battle-qr.svg" alt="QR-Code zum Startbildschirm von Brand Color Battle" width="512" height="512" />
+                </a>
+                <small>Scannen &amp; starten</small>
+              </div>
+            </section>
+
+            <section class="dashboard-panel activity-panel" aria-labelledby="activity-title">
+              <div class="dashboard-panel-head">
+                <div>
+                  <p class="eyebrow">Zuletzt gespielt</p>
+                  <h2 id="activity-title">Neue Ergebnisse</h2>
+                </div>
+              </div>
+              <ol class="activity-list" id="recent-results" aria-live="polite">
+                <li class="dashboard-placeholder">Aktivität wird geladen …</li>
+              </ol>
+            </section>
+          </div>
         </div>
 
         <p class="dashboard-message" id="dashboard-message" role="status" hidden></p>
